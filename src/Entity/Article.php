@@ -30,7 +30,7 @@ class Article
     private $creation;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $modification;
 
@@ -100,7 +100,7 @@ class Article
         return $this->modification;
     }
 
-    public function setModification(\DateTimeInterface $modification): self
+    public function setModification(?\DateTimeInterface $modification): self
     {
         $this->modification = $modification;
 

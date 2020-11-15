@@ -91,8 +91,8 @@ class AppFixtures extends Fixture
                 $article = new Article();
                 $article->setTitre($faker->sentence($nbWords = 6, $variableNbWords = true))
                     ->setContenu($faker->text($maxNbChars = 2000))
-                    ->setCreation(new \Datetime('now'))
-                    ->setModification(new \Datetime('now'))
+                    ->setCreation($faker->dateTimeBetween($startDate = '-10 years', $endDate = 'now', $timezone = null))
+                    ->setModification(null)
                     ->setEcrivain($writer)
                     ->setImage(null)
                     ->setCategorie($categorie)

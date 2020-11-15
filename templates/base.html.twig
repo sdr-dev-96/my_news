@@ -2,32 +2,30 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}{% endblock %} - MyNews</title>
-        <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="/css/layout.css">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        <nav class="main-nav">
-            <div class="nav-wrapper">
-            <a href="#" class="brand-logo">&nbsp;&nbsp;MyNews</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="{{ path('home') }}">Home</a></li>
-                {% if app.user %}
-                    <li><a href="badges.html">Mon Profil</a></li>
-                {% else %}
-                    <li><a href="{{ path('login') }}">Connexion</a></li>
-                    <li><a href="{{ path('register') }}">Inscription</a></li>
-                {% endif %}
-            </ul>
-            </div>
-        </nav>
         <div class="container">
+            <header class="blog-header py-3">
+                <div class="row flex-nowrap justify-content-between align-items-center">
+                    <div class="col-4 offset-4 text-center">
+                        <a class="blog-header-logo text-dark" href="#">MyNews</a>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end align-items-center btn-group">
+                        <a class="btn btn-sm btn-outline-secondary" href="#">Connexion</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="#">Inscription</a>
+                    </div>
+                </div>
+            </header>
             {% block body %}{% endblock %}
         </div>
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
