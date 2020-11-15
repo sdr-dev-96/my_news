@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use App\Entity\Article;
+use App\Entity\Categorie;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -57,18 +58,50 @@ class AppFixtures extends Fixture
 
         $manager->flush();
 
-        for($i = 0; $i <= 10; $i++) {
-            $article = new Article();
-            $article->setTitre($faker->sentence($nbWords = 6, $variableNbWords = true))
-                ->setContenu($faker->text($maxNbChars = 200))
-                ->setCreation(new \Datetime('now'))
-                ->setModification(new \Datetime('now'))
-                ->setEcrivain($writer)
-                ->setImage(null)
+        //Catégorie
+        $arrayCategories = [
+            0   =>  [
+                'libelle'   =>  'Economie',
+                'couleur'   =>  'green'
+            ],
+            1   =>  [
+                'libelle'   =>  'Sciences/Technologie',
+                'couleur'   =>  'blue'
+            ],
+            2   => [
+                'libelle'   =>  'Monde',
+                'couleur'   =>  'yellow'
+            ],
+            3   => [
+                'libelle'   =>  'Sport',
+                'couleur'   =>  'orange'
+            ]
+        ];
+
+        // Catégorie
+        for($i = 0; $i <= 3; $i++) {
+            $categorie = new Categorie();
+            $categorie
+                ->setLibelle($arrayCategories[$i]['libelle'])
+                ->setCouleur($arrayCategories[$i]['couleur'])
             ;
-            $manager->persist($article);
+            $manager->persist($categorie);
+            // Article
+            for($j = 0; $j <= 10; $j++) {
+                $article = new Article();
+                $article->setTitre($faker->sentence($nbWords = 6, $variableNbWords = true))
+                    ->setContenu($faker->text($maxNbChars = 2000))
+                    ->setCreation(new \Datetime('now'))
+                    ->setModification(new \Datetime('now'))
+                    ->setEcrivain($writer)
+                    ->setImage(null)
+                    ->setCategorie($categorie)
+                ;
+                $manager->persist($article);
+            }
         }
 
         $manager->flush();
+
     }
 }

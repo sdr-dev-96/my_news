@@ -55,6 +55,12 @@ class Article
      */
     private $ecrivain;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categorie;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -160,6 +166,18 @@ class Article
     public function setEcrivain(?User $ecrivain): self
     {
         $this->ecrivain = $ecrivain;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

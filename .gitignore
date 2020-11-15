@@ -10,6 +10,8 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+/migrations/
+
 ###> symfony/phpunit-bridge ###
 .phpunit
 .phpunit.result.cache
