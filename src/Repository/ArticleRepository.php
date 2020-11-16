@@ -18,6 +18,20 @@ class ArticleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Article::class);
     }
+    
+    /**
+     * Permet de récupérer un article au hazard
+     */
+    public function findRandomArticle()
+    {
+        return $this->createQueryBuilder('a')
+            ->addSelect('a')
+            ->orderBy('RAND()')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     // /**
     //  * @return Article[] Returns an array of Article objects
