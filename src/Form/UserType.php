@@ -43,11 +43,6 @@ class UserType extends AbstractType
                     )
                 ),
             ))
-            ->add('Enregistrer', SubmitType::class, array(
-                'attr'  =>  array(
-                    'class' =>  'waves-effect waves-light btn-large'
-                )
-            ))
         ;
     }
 
