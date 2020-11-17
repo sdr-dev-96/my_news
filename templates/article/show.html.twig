@@ -5,16 +5,16 @@
 {% block body %}
 
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('home') }}">Accueil</a></li>
-            <li class="breadcrumb-item" aria-current="page">{{ article.categorie.libelle }}</li>
-            <li class="breadcrumb-item active" aria-current="page">{{ article.titre }}</li>
+        <ol class="breadcrumb bg-white">
+            <li class="breadcrumb-item"><a class="text-dark" href="{{ path('home') }}">Accueil</a></li>
+            <li class="breadcrumb-item text-{{ article.categorie.couleur }}" aria-current="page">{{ article.categorie.libelle }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ article.titre|slice(0, 20)}} ... </li>
         </ol>
     </nav>
     <div class="blog-post">
         <h1 class="blog-post-title">{{ article.titre }}</h1>
         <p class="blog-post-meta"> par <a href="#">{{ article.ecrivain }}</a></p>
-        <p class="blog-post-meta">{{ article.getDate|date('D d F Y', "Europe/Paris") }}</p>
+        <p class="blog-post-meta text-muted">{{ article.getDate|date('D d F Y', "Europe/Paris") }}</p>
 
         <p>{{ article.contenu }}</p>
     </div>

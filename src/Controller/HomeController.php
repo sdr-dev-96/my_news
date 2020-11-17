@@ -10,17 +10,19 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\ArticleRepository;
+use App\Repository\CategorieRepository;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(ArticleRepository $artRepo): Response
+    public function index(ArticleRepository $artRepo, CategorieRepository $catRepository): Response
     {
         return $this->render('home/index.html.twig', [
-            'randomArticle'   =>  $artRepo->findRandomArticle()[0],
-            'articles'      =>  $artRepo->findAll(),
+            'randomArticle'     =>  $artRepo->findRandomArticle()[0],
+            'articles'          =>  $artRepo->findAll(),
+            'categories'        =>  $catRepository->findAll()
         ]);
     }
 
