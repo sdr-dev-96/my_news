@@ -1,42 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Article{% endblock %}
+{% block title %}{{ article.titre }}{% endblock %}
 
 {% block body %}
-    <h1>Article</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ article.titre }}</td>
-            </tr>
-            <tr>
-                <th>Creation</th>
-                <td>{{ article.creation ? article.creation|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Modification</th>
-                <td>{{ article.modification ? article.modification|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Contenu</th>
-                <td>{{ article.contenu }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ article.image }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('home') }}">Accueil</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ article.categorie.libelle }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ article.titre }}</li>
+        </ol>
+    </nav>
+    <div class="blog-post">
+        <h1 class="blog-post-title">{{ article.titre }}</h1>
+        <p class="blog-post-meta"> par <a href="#">{{ article.ecrivain }}</a></p>
+        <p class="blog-post-meta">{{ article.getDate|date('D d F Y', "Europe/Paris") }}</p>
 
+        <p>{{ article.contenu }}</p>
+    </div>
+
+    {#
     <a href="{{ path('article_index') }}">back to list</a>
 
     <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
 
     {{ include('article/_delete_form.html.twig') }}
+    
+    #}
 {% endblock %}

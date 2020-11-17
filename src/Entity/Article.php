@@ -181,4 +181,17 @@ class Article
 
         return $this;
     }
+
+    /**
+     * Permet d'obtenir la date la plus récente de l'article
+     * @return  \DateTimeInterface
+     */
+    public function getDate(): ?\DateTimeInterface
+    {
+        if($this->creation > $this->modification) {
+            return $this->creation;
+        } else {
+            return $this->modification;
+        }
+    }
 }

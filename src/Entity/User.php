@@ -68,6 +68,15 @@ class User implements UserInterface
         $this->articles = new ArrayCollection();
     }
 
+    /**
+     * Permet de retourner le prénom et nom de l'User
+     * @return  string
+     */
+    public function __toString(): string
+    {
+        return $this->prenom . ' ' . $this->nom;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
