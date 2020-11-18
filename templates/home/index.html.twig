@@ -39,7 +39,7 @@
                             Lire plus&nbsp;<i class="fas fa-angle-right"></i>
                         </a>
                         {% if app.user %}
-                            <span class="far fa-heart add-favorite"></span>
+                            <span class="add-favorite far fa-heart" article-id="{{ article.id }}"></span>
                         {% endif %}
                     </div>
                     <img class="card-img-right flex-auto d-none d-md-block" src="https://image.tmdb.org/t/p/w200/iUp85s5s7eaPbuCUNqOCeJCEVpY.jpg" alt="Card image cap">
@@ -47,4 +47,8 @@
             </div>
         {% endfor %}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/home.js" defer></script>
 {% endblock %}

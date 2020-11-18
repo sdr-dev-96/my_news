@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/article")
@@ -92,5 +93,39 @@ class ArticleController extends AbstractController
         }
 
         return $this->redirectToRoute('article_index');
+    }
+
+    /**
+     * @Route("/favoris", name="ajax_get_favoris", methods={"GET"})
+     * @return  JsonResponse
+     */
+    public function getFavoris(): JsonResponse
+    {
+        $response   = new JsonResponse('Une erreur est survenue !', 500);
+        $response->headers->set('Content-Type', 'application/json');
+        if($this->getUser()) {
+            $favIds = [];
+            foreach($this->getUser()->getFavoris() as $fav) {
+                $favIds[] = $fav->getId(); 
+            }
+            $response = new JsonResponse(['ids' =>  $favIds], 200);
+        }
+        return $response;
+    }
+
+    /**
+     * @Route("/favoris/new", name="ajax_new_favoris", methods={"POST"})
+     */
+    public function newFavoris(Request $request, ArticleRepository $articleRepository): JsonResponse
+    {
+        $response   = new JsonResponse('Une erreur est survenue !', 500);
+        $response->headers->set('Content-Type', 'application/json');
+        if($this->getUser()) {
+            $article = $articleRepository->findOneBy(['id' => $request->request->get('articleId')]);
+            $this->getUser()->addFavori($article);
+            $this->getDoctrine()->getManager()->flush();
+            $response = new JsonResponse('La favori a bien été ajouté !', 200);
+        }
+        return $response;
     }
 }
