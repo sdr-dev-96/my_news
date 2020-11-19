@@ -7,7 +7,8 @@
     position: relative;
 }
 
-.add-favorite {
+.add-favori,
+.remove-favori {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -17,7 +18,8 @@
     border-radius: 100%;
 }
 
-.add-favorite:hover {
+.add-favori:hover,
+.remove-favori:hover {
     cursor: pointer;
     background-color: #E0E0E0;
 }
