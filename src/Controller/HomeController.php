@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\ArticleRepository;
@@ -43,6 +43,17 @@ class HomeController extends AbstractController
         }
         return $this->render('home/profil.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+	 * @IsGranted("ROLE_USER")
+     * @Route("/mes-favoris", name="user_favoris", methods={"GET"})
+     */
+    public function favoris()
+    {
+        return $this->render('home/favoris.html.twig', [
+            'favoris' => $this->getUser()->getFavoris(),
         ]);
     }
 }
