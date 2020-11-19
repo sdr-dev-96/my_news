@@ -52,12 +52,3 @@
         {% endfor %}
     </div>
 {% endblock %}
-
-{% block javascripts %}
-    {% if app.user %}
-        <script>
-            let idUser = {{ app.user.getId }};
-        </script>
-    {% endif %}
-    <script src="/js/home.js" defer></script>
-{% endblock %}

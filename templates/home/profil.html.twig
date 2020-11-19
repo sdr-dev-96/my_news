@@ -1,10 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes Informations{% endblock %}
+{% block title %}Mon Profil{% endblock %}
 
 {% block body %}
-    <h1>Mes Informations</h1>
-    
-    {{ include('user/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    <div class="container section-block">
+        <h1>Mon Profil</h1>
 
+        <nav class="nav nav-tabs">
+            <a class="nav-item nav-link active" href="#mes-infos" data-toggle="tab">Mes Informations</a>
+            <a class="nav-item nav-link " href="#mes-favoris" data-toggle="tab">Mes Favoris</a>
+            <a class="nav-item nav-link" href="#mes-articles" data-toggle="tab">Mes Articles</a>
+        </nav>
+
+        <div class="tab-content">
+            <!-- MES INFORMATIONS -->
+            <div class="tab-pane fade show active" id="mes-infos">
+                <h2>Mes Informations</h2>
+                <div class="content">
+                    {{ include('user/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                </div>
+            </div>
+            <!-- MES FAVORIS -->
+            <div class="tab-pane fade show" id="mes-favoris">
+                <h2>Mes Favoris</h2>
+                <div class="content">
+                    {{ include('home/_favoris.html.twig', {'favoris' : app.user.getFavoris}) }}
+                </div>
+            </div>
+            <!-- MES ARTICLES -->
+            <div class="tab-pane fade show" id="mes-articles">
+                <h2>Mes Articles</h2>
+                <div class="content">
+                </div>
+            </div>
+        </div>
+
+    </div>
 {% endblock %}

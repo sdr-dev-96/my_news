@@ -95,20 +95,5 @@ class ArticleController extends AbstractController
         return $this->redirectToRoute('article_index');
     }
 
-    /**
-     * @Route("/favoris/new", name="ajax_new_favoris", methods={"POST"})
-     * @return  JsonResponse
-     */
-    public function newFavoris(Request $request, ArticleRepository $articleRepository): JsonResponse
-    {
-        $response   = new JsonResponse('Une erreur est survenue !', 500);
-        if($this->getUser()) {
-            $article = $articleRepository->findOneBy(['id' => $request->request->get('articleId')]);
-            $this->getUser()->addFavori($article);
-            $this->getDoctrine()->getManager()->flush();
-            $response = new JsonResponse('La favori a bien été ajouté !', 200);
-        }
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-    }
+   
 }

@@ -45,15 +45,4 @@ class HomeController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
-	 * @IsGranted("ROLE_USER")
-     * @Route("/mes-favoris", name="user_favoris", methods={"GET"})
-     */
-    public function favoris()
-    {
-        return $this->render('home/favoris.html.twig', [
-            'favoris' => $this->getUser()->getFavoris(),
-        ]);
-    }
 }
