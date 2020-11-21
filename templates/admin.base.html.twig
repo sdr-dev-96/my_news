@@ -23,7 +23,7 @@
             <div class="row">
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                     <div class="sidebar-sticky">
-                        <ul class="nav flex-column">
+                        <ul id="admin-dashboard" class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link active" href="#">
                                 <i class="fas fa-home"></i>
@@ -31,9 +31,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ path('article_index') }}">
                                 <i class="fas fa-newspaper"></i>
                                 &nbsp;Articles
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('categorie_index') }}">
+                                <i class="fas fa-newspaper"></i>
+                                &nbsp;Catégories
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -63,7 +69,7 @@
                 let idUser = {{ app.user.getId }};
             </script>
         {% endif %}
-        <script src="{{ asset('js/app.js?2020') }}"></script>
+        <script src="{{ asset('js/admin.js?2020') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
