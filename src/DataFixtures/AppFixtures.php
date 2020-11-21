@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use App\Entity\Article;
 use App\Entity\Categorie;
-use App\Entity\Note;
+use App\Entity\Commentaire;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -67,7 +67,7 @@ class AppFixtures extends Fixture
             array('libelle' => 'Sport','couleur' => 'danger'),
             array('libelle' => 'Politique','couleur' => 'info'),
             array('libelle' => 'Santé','couleur' => 'secondary')
-          );
+        );
 
         for($i = 0; $i <= 5; $i++) {
             $categorie = new Categorie();
@@ -81,7 +81,7 @@ class AppFixtures extends Fixture
                 $article = new Article();
                 $article->setTitre($faker->sentence($nbWords = 6, $variableNbWords = true))
                     ->setContenu($faker->text($maxNbChars = 2000))
-                    ->setCreation($faker->dateTimeBetween($startDate = '-10 years', $endDate = 'now', $timezone = null))
+                    ->setCreation($faker->dateTimeBetween($startDate = '-10 years', $endDate = '-1 month', $timezone = null))
                     ->setModification(null)
                     ->setEcrivain($writer)
                     ->setImage(null)
@@ -100,18 +100,19 @@ class AppFixtures extends Fixture
                     ;
                     $manager->persist($foo);
 
-                    // Note
-                    $note = new Note();
-                    $note->setNote($faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 5))
-                        ->setUser($foo)
+                    // Commentaire
+                    $comm = new Commentaire();
+                    $comm->setUser($foo)
                         ->setArticle($article)
+                        ->setNote($faker->numberBetween($min = 0, $max = 5))
+                        ->setTexte($faker->text($maxNbChars = 500))
+                        ->setCreation($faker->dateTimeBetween($startDate = $article->getCreation(), $endDate = 'now', $timezone = null))
+                        ->setValid(rand(0,1) == 1)
                     ;
-                    $manager->persist($note);
+                    $manager->persist($comm);
                 }
             }
         }
-
         $manager->flush();
-
     }
 }

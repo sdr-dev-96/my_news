@@ -63,15 +63,15 @@ class User implements UserInterface
     private $articles;
 
     /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user", orphanRemoval=true)
      */
-    private $notes;
+    private $commentaires;
 
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
         $this->articles = new ArrayCollection();
-        $this->notes = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     /**
@@ -252,29 +252,29 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Note[]
+     * @return Collection|Commentaire[]
      */
-    public function getNotes(): Collection
+    public function getCommentaires(): Collection
     {
-        return $this->notes;
+        return $this->commentaires;
     }
 
-    public function addNote(Note $note): self
+    public function addCommentaire(Commentaire $commentaire): self
     {
-        if (!$this->notes->contains($note)) {
-            $this->notes[] = $note;
-            $note->setUser($this);
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeNote(Note $note): self
+    public function removeCommentaire(Commentaire $commentaire): self
     {
-        if ($this->notes->removeElement($note)) {
+        if ($this->commentaires->removeElement($commentaire)) {
             // set the owning side to null (unless already changed)
-            if ($note->getUser() === $this) {
-                $note->setUser(null);
+            if ($commentaire->getUser() === $this) {
+                $commentaire->setUser(null);
             }
         }
 
