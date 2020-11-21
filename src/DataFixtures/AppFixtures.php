@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use App\Entity\Article;
 use App\Entity\Categorie;
+use App\Entity\Note;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -58,28 +59,17 @@ class AppFixtures extends Fixture
 
         $manager->flush();
 
-        //Catégorie
-        $arrayCategories = [
-            0   =>  [
-                'libelle'   =>  'Economie',
-                'couleur'   =>  'green'
-            ],
-            1   =>  [
-                'libelle'   =>  'Sciences/Technologie',
-                'couleur'   =>  'blue'
-            ],
-            2   => [
-                'libelle'   =>  'Monde',
-                'couleur'   =>  'yellow'
-            ],
-            3   => [
-                'libelle'   =>  'Sport',
-                'couleur'   =>  'orange'
-            ]
-        ];
+        //Catégories
+        $arrayCategories = array(
+            array('libelle' => 'Economie','couleur' => 'success'),
+            array('libelle' => 'Sciences - Technologie','couleur' => 'primary'),
+            array('libelle' => 'Monde','couleur' => 'warning'),
+            array('libelle' => 'Sport','couleur' => 'danger'),
+            array('libelle' => 'Politique','couleur' => 'info'),
+            array('libelle' => 'Santé','couleur' => 'secondary')
+          );
 
-        // Catégorie
-        for($i = 0; $i <= 3; $i++) {
+        for($i = 0; $i <= 5; $i++) {
             $categorie = new Categorie();
             $categorie
                 ->setLibelle($arrayCategories[$i]['libelle'])
@@ -98,6 +88,26 @@ class AppFixtures extends Fixture
                     ->setCategorie($categorie)
                 ;
                 $manager->persist($article);
+
+                // Foo Users
+                for($k = 0; $k <= 10; $k++) {
+                    $foo   = new User();
+                    $foo->setEmail($faker->email)
+                        ->setPassword($this->passwordEncoder->encodePassword($foo, $faker->password))
+                        ->setNom($faker->lastName)
+                        ->setPrenom($faker->firstNameMale)
+                        ->setRoles(['ROLE_USER'])
+                    ;
+                    $manager->persist($foo);
+
+                    // Note
+                    $note = new Note();
+                    $note->setNote($faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 5))
+                        ->setUser($foo)
+                        ->setArticle($article)
+                    ;
+                    $manager->persist($note);
+                }
             }
         }
 

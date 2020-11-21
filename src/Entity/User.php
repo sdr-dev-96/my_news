@@ -62,10 +62,16 @@ class User implements UserInterface
      */
     private $articles;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $notes;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     /**
@@ -239,6 +245,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($article->getEcrivain() === $this) {
                 $article->setEcrivain(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getUser() === $this) {
+                $note->setUser(null);
             }
         }
 

@@ -61,9 +61,15 @@ class Article
      */
     private $categorie;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="article", orphanRemoval=true)
+     */
+    private $notes;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -193,5 +199,52 @@ class Article
         } else {
             return $this->modification;
         }
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getArticle() === $this) {
+                $note->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Permet de récupérer la note globale de l'article
+     * @return  int
+     */
+    public function getNoteGlobale(): float
+    {
+        $note   = 0;
+        foreach($this->notes as $note) {
+            $note += $note->getNote();
+        }
+        if($note != 0) {
+            $note = $note / count($this->notes);
+            $note = round($note, 1);
+        }
+        return $note;
     }
 }
