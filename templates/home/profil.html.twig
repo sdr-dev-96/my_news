@@ -2,6 +2,10 @@
 
 {% block title %}Mon Profil{% endblock %}
 
+{% block fil_ariane %}
+    <li class="breadcrumb-item text-dark active" aria-current="page">Profil</li>
+{% endblock %}
+
 {% block body %}
     <div class="container section-block">
         <h1>Mon Profil</h1>
@@ -9,6 +13,7 @@
         <nav class="nav nav-tabs">
             <a class="nav-item nav-link active" href="#mes-infos" data-toggle="tab">Mes Informations</a>
             <a class="nav-item nav-link " href="#mes-favoris" data-toggle="tab">Mes Favoris</a>
+            <a class="nav-item nav-link " href="#mes-commentaires" data-toggle="tab">Mes Commentaires</a>
             <a class="nav-item nav-link" href="#mes-articles" data-toggle="tab">Mes Articles</a>
         </nav>
 
@@ -27,6 +32,14 @@
                     {{ include('article/_articles.html.twig', {'articles' : app.user.getFavoris, 'container': '#user-favoris'}) }}
                 </div>
             </div>
+            <!-- MES COMMENTAIRES -->
+            <div class="tab-pane fade show" id="mes-commentaires">
+                <h2>Mes Commentaires</h2>
+                <div class="content">
+                    {{ include('article/_commentaires.html.twig', {'commentaires' : app.user.getCommentaires}) }}
+                </div>
+            </div>
+            
             <!-- MES ARTICLES -->
             <div class="tab-pane fade show" id="mes-articles">
                 <h2>Mes Articles</h2>
