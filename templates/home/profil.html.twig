@@ -23,8 +23,8 @@
             <!-- MES FAVORIS -->
             <div class="tab-pane fade show" id="mes-favoris">
                 <h2>Mes Favoris</h2>
-                <div class="content">
-                    {{ include('home/_favoris.html.twig', {'favoris' : app.user.getFavoris}) }}
+                <div class="row mb-2" id="user-favoris">
+                    {{ include('article/_articles.html.twig', {'articles' : app.user.getFavoris, 'container': '#user-favoris'}) }}
                 </div>
             </div>
             <!-- MES ARTICLES -->

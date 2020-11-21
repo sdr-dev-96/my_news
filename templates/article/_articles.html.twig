@@ -13,7 +13,7 @@
                 </a>
                 {% if app.user %}
                     {% if article in app.user.getFavoris %}
-                        <span class="remove-favori fas fa-heart" article-id="{{ article.id }}"></span>
+                        <span class="remove-favori fas fa-heart" article-id="{{ article.id }}" data-target="{{ container }}"></span>
                     {% else %}
                         <span class="add-favori far fa-heart" article-id="{{ article.id }}"></span>
                     {% endif %}

@@ -41,8 +41,9 @@ class FavorisController extends AbstractController
         if($this->getUser() && !empty($article)) {
             $this->getUser()->removeFavori($article);
             $this->getDoctrine()->getManager()->flush();
-            return $this->render('home/_favoris.html.twig', [
-                'favoris' => $this->getUser()->getFavoris(),
+            return $this->render('article/_articles.html.twig', [
+                'articles'  =>  $this->getUser()->getFavoris(),
+                'container' =>  ''
             ]);
         }
         return $response;

@@ -2,17 +2,14 @@
 
 {% block title %}{{ article.titre }}{% endblock %}
 
-{% block body %}
+{% block fil_ariane %}
+    <li class="breadcrumb-item" aria-current="page">
+        <a class="text-{{ article.categorie.couleur }}" href="{{ path('categorie_show', {'id': article.categorie.id}) }}">{{ article.categorie.libelle }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ article.titre|slice(0, 20)}} ... </li>
+{% endblock %}
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-white">
-            <li class="breadcrumb-item"><a class="text-dark" href="{{ path('home') }}">Accueil</a></li>
-            <li class="breadcrumb-item" aria-current="page">
-                <a class="text-{{ article.categorie.couleur }}" href="{{ path('categorie_show', {'id': article.categorie.id}) }}">{{ article.categorie.libelle }}</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">{{ article.titre|slice(0, 20)}} ... </li>
-        </ol>
-    </nav>
+{% block body %}
     <div class="blog-post">
         <h1 class="blog-post-title">{{ article.titre }}</h1>
         <p class="blog-post-meta"> par <a href="#">{{ article.ecrivain }}</a></p>

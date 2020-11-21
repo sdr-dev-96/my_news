@@ -26,7 +26,7 @@
         </nav>
     </div>
     <!-- ARTICLES -->
-    <div class="row mb-2">
-        {{ include('article/_articles.html.twig', {'articles' : articles}) }}
+    <div class="row mb-2" id="home-articles">
+        {{ include('article/_articles.html.twig', {'articles' : articles, 'container': '#home-articles'}) }}
     </div>
 {% endblock %}

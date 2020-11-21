@@ -2,18 +2,15 @@
 
 {% block title %}{{ categorie.libelle|capitalize }}{% endblock %}
 
-{% block body %}
+{% block fil_ariane %}
+    <li class="breadcrumb-item" aria-current="page">{{ categorie.libelle }}</li>
+{% endblock %}
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-white">
-            <li class="breadcrumb-item"><a class="text-dark" href="{{ path('home') }}">Accueil</a></li>
-            <li class="breadcrumb-item" aria-current="page">{{ categorie.libelle }}</li>
-        </ol>
-    </nav>
+{% block body %}
     <h1>{{ categorie.libelle }}</h1>
     <!-- ARTICLES -->
-    <div class="row mb-2">
-        {{ include('article/_articles.html.twig', {'articles' : categorie.getArticles}) }}
+    <div class="row mb-2" id="categorie-articles">
+        {{ include('article/_articles.html.twig', {'articles' : categorie.getArticles, 'container': '#categorie-articles'}) }}
     </div>
 
     {#<a href="{{ path('categorie_index') }}">back to list</a>
