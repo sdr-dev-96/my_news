@@ -280,4 +280,13 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * Permet de retourner les intiales de l'user
+     * @return  string
+     */
+    public function getInitiales(): string
+    {
+        return strtoupper(substr($this->prenom, 0, 1) . substr($this->nom, 0, 1));
+    }
 }

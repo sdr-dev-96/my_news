@@ -6,7 +6,7 @@
     <li class="breadcrumb-item" aria-current="page">
         <a class="text-{{ article.categorie.couleur }}" href="{{ path('categorie_show', {'id': article.categorie.id}) }}">{{ article.categorie.libelle }}</a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">{{ article.titre|slice(0, 20)}} ... </li>
+    <li class="breadcrumb-item text-dark active" aria-current="page">{{ article.titre|slice(0, 20)}} ... </li>
 {% endblock %}
 
 {% block body %}
@@ -16,5 +16,22 @@
         <p class="blog-post-meta text-muted">{{ article.getDate|date('D d F Y', "Europe/Paris") }}</p>
 
         <p>{{ article.contenu }}</p>
+    </div>
+    <!-- COMMENTAIRES -->
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">Commentaires</h6>
+        {% for comm in article.getCommentaires|sort((a, b) => b.creation <=> a.creation) %}
+            <div class="media pt-3">
+                <img class="mr-2 rounded" src="http://placehold.it/100?text={{ comm.user.getInitiales }}" alt="{{ comm.user }}">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">{{ comm.user }}</strong>
+                    <span class="d-block text-muted small">{{ comm.creation|date('j F - H:i') }}</span>
+                    {{ comm.texte }}
+                </p>
+            </div>
+        {% else %}
+            Aucun commentaire
+        {% endfor %}
+
     </div>
 {% endblock %}
