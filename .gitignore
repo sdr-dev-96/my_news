@@ -12,6 +12,8 @@
 
 /migrations/
 
+/public/uploads/*
+
 ###> symfony/phpunit-bridge ###
 .phpunit
 .phpunit.result.cache

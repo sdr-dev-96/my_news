@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Categorie;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ArticleType extends AbstractType
 {
@@ -22,29 +26,45 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('titre', TextType::class, [
-                'label'     =>  'Titre',
-                'attr'      => array(
-                    'class' => 'form-control'
+                'label'     =>  'Titre *',
+                'attr'      =>  array(
+                    'class' =>  'form-control'
                 )
             ])
             ->add('contenu', TextareaType::class, [
-                'label'     =>  'Contenu',
-                'attr'      => array(
+                'label'     =>  'Contenu *',
+                'attr'      =>  array(
                     'class' => 'form-control'
                 )
+            ])
+            ->add('categorie', EntityType::class, [
+                'label'         =>  'Catégorie *',
+                'attr'          =>  array(
+                    'class'     => 'form-control'
+                ),
+                'class'         =>  Categorie::class,
+                'choice_label'  =>  'libelle'
             ])
             ->add('image', FileType::class, [
-                'label'     =>  'Image',
-                'attr'      => array(
-                    'class' => 'form-control'
-                )
+                'label'         =>  'Image',
+                'required'      =>  false,
+                'data_class'    =>  null,
+                'mapped'        =>  false,
+                'attr'          =>  array(
+                    'class'     => 'form-control'
+                ),
             ])
-            ->add('ecrivain', TextType::class, [
-                'label'     =>  'Ecrivain',
-                'disabled'  => true,
-                'attr'      => array(
-                    'class' => 'form-control'
-                )
+            ->add('online', ChoiceType::class, [
+                'label' =>  'En ligne',
+                'attr'          =>  array(
+                    'class'     => 'form-control'
+                ),
+                'choices'   =>  [
+                    'Oui'   =>  true,
+                    'Non'   =>  false
+                ],
+                'required'  => true,
+                'multiple'  =>  false,
             ])
         ;
     }

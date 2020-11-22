@@ -1,13 +1,38 @@
 {% extends 'admin.base.html.twig' %}
 
-{% block title %}Edit Article{% endblock %}
+{% block title %}Modifier un Article{% endblock %}
 
 {% block body %}
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    
     <h1>Modifier un article</h1>
-    <div class="col-12 col-md-8">
-        {{ include('article/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    <a class="btn btn-outline-primary text-primary" href="{{ path('article_show', {'id': article.id}) }}"
+        title="Voir l'article sur le site" target="_blank">
+        <i class="fas fa-eye"></i>
+        &nbsp;&nbsp;Voir sur le site
+    </a>
+    <div class="row" id="edit-form">
+        <div class="col-12 col-md-8">
+            {{ include('article/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+        </div>
+
+        <div class="col-12 col-md-4">
+            {% if article.getImageLink %}
+                <img class="mr-2 rounded-top img-responsive" src="{{ article.getImageLink }}" alt="{{ article.image }}">
+                <button class="btn btn-danger btn-block text-white delete-picture rounded-bottom">Supprimer l'image</button>
+            {% endif %}
+        </div>
     </div>
-
-
-    {{ include('article/_delete_form.html.twig') }}
+    
+    {#{ include('article/_delete_form.html.twig') }#}
 {% endblock %}

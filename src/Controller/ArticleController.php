@@ -38,15 +38,27 @@ class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $article->setModification(new \Datetime('now'))
+                ->setCreation(new \Datetime('now'));
+            // enregistrement image
+            if (!empty($form->get('image')->getData())) {
+                $file       = $form->get('image')->getData();
+                $fileName   = $file->getClientOriginalName();
+                $article->setImage($fileName);
+            }
             $entityManager->persist($article);
             $entityManager->flush();
+
+            if (!empty($form->get('image')->getData())) {
+                $file->move($this->getParameter('upload_directory').'/article/'.$article->getId(), $fileName);
+            }
 
             return $this->redirectToRoute('article_index');
         }
 
         return $this->render('article/new.html.twig', [
-            'article' => $article,
-            'form' => $form->createView(),
+            'article'   => $article,
+            'form'      => $form->createView(),
         ]);
     }
 
@@ -70,18 +82,29 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $article->setModification(new \Datetime('now'));
+
+            if (!empty($form->get('image')->getData())) {
+                $file       = $form->get('image')->getData();
+                $fileName   = $file->getClientOriginalName();
+                $article->setImage($fileName);
+            }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('article_index');
+            if (!empty($form->get('image')->getData())) {
+                $file->move($this->getParameter('upload_directory').'/article/'.$article->getId(), $fileName);
+            }
+            $this->addFlash('success', 'L\'article a bien été modifié !');
         }
 
         return $this->render('article/edit.html.twig', [
-            'article' => $article,
-            'form' => $form->createView(),
+            'article'   => $article,
+            'form'      => $form->createView(),
         ]);
     }
 
     /**
+	 * @IsGranted("ROLE_ADMIN")
      * @Route("/{id}", name="article_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Article $article): Response

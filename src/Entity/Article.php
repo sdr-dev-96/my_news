@@ -143,6 +143,15 @@ class Article
     }
 
     /**
+     * Permet de retourner le lien de l'image de l'article
+     * @return  string|null
+     */
+    public function getImageLink(): string
+    {
+        return ($this->image != null) ? '/uploads/article/'.$this->id.'/'.$this->image : '';
+    }
+
+    /**
      * @return Collection|User[]
      */
     public function getUsers(): Collection
