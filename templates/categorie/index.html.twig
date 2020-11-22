@@ -3,11 +3,10 @@
 {% block title %}Catégories{% endblock %}
 
 {% block body %}
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
     <h1>Liste des Catégories</h1>
     <a href="{{ path('categorie_new') }}">Create new</a>
-    <table class="table">
-        <thead>
+    <table class="table table-striped">
+        <thead class="thead-dark">
             <tr>
                 <th>#</th>
                 <th>Libelle</th>
@@ -37,7 +36,6 @@
         {% endfor %}
         </tbody>
     </table>
-</main>
 
     <a href="{{ path('categorie_new') }}">Create new</a>
 {% endblock %}

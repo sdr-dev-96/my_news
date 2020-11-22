@@ -34,6 +34,7 @@ body {
   
   .sidebar .nav-link {
     font-weight: 500;
+    font-size: 16px;
     color: #333;
   }
   
@@ -91,4 +92,12 @@ body {
   
   .border-top { border-top: 1px solid #e5e5e5; }
   .border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+  .table {
+    margin: 2em auto;
+  }
+
+  form>div>div {
+    margin: 1em auto;
+  }
   
