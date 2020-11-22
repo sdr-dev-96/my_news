@@ -74,6 +74,7 @@ class ArticleController extends AbstractController
     }
 
     /**
+	 * @IsGranted("ROLE_WRITER")
      * @Route("/{id}/edit", name="article_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Article $article): Response
