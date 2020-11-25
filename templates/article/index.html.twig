@@ -5,11 +5,10 @@
 {% block body %}
     <h1>Liste des articles</h1>
     <a class="btn btn-success" href="{{ path('article_new') }}">
-        <i class="fas fa-plus"></i>&nbsp;&nbsp;
-        Nouvel article
+        Créer un article&nbsp;&nbsp;<i class="fas fa-plus"></i>
     </a>
     <br>
-    <table class="table table-striped">
+    <table class="table table-striped rounded">
         <thead class="thead-dark">
             <tr>
                 <th>#</th>
@@ -28,7 +27,7 @@
                 <td>{{ article.titre }}</td>
                 <td>{{ article.creation ? article.creation|date('d/m/Y') : '' }}</td>
                 <td>{{ article.modification ? article.modification|date('d/m/Y') : article.creation|date('d/m/Y') }}</td>
-                <td>{{ article.image }}</td>
+                <td>{{ article.image ? 'Image' : 'Pas d\'image' }}</td>
                 <td>{{ article.online ? 'Oui' : 'Non' }}</td>
                 <td>
                     <a class="btn btn-outline-primary" href="{{ path('article_show', {'id': article.id}) }}"

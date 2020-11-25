@@ -38,9 +38,11 @@ class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $article->setModification(new \Datetime('now'))
+            $article
+                ->setEcrivain($this->getUser())
+                ->setModification(new \Datetime('now'))
                 ->setCreation(new \Datetime('now'));
-            // enregistrement image
+                
             if (!empty($form->get('image')->getData())) {
                 $file       = $form->get('image')->getData();
                 $fileName   = $file->getClientOriginalName();
@@ -53,7 +55,9 @@ class ArticleController extends AbstractController
                 $file->move($this->getParameter('upload_directory').'/article/'.$article->getId(), $fileName);
             }
 
-            return $this->redirectToRoute('article_index');
+            return $this->redirectToRoute('article_edit', [
+                'id'    =>  $article->getId()
+            ]);
         }
 
         return $this->render('article/new.html.twig', [

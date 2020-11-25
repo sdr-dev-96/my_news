@@ -18,7 +18,8 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder) 
+    {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -42,6 +43,9 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
+            if(in_array('ROLE_ADMIN', $user->getRoles())) {
+                return $this->redirectToRoute('article_index');
+            }
             return $this->redirectToRoute('home');
         }
         $error          = $authenticationUtils->getLastAuthenticationError();

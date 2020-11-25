@@ -1,11 +1,28 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.base.html.twig' %}
 
-{% block title %}New Article{% endblock %}
+{% block title %}Créer un article{% endblock %}
 
 {% block body %}
-    <h1>Create new Article</h1>
 
-    {{ include('article/_form.html.twig') }}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
 
-    <a href="{{ path('article_index') }}">back to list</a>
+    <h1>Créer un article</h1>
+    {{ include('article/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    tinymce.init({
+    selector: '#article_contenu'
+    });
+</script>
 {% endblock %}
