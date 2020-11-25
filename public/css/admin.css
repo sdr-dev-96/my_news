@@ -129,5 +129,19 @@ a.btn-outline-primary:hover {
 }
 
 input[type=radio] {
-  width: 10%;
+  width: 2.5em;
+}
+
+div>label {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+#article_online label {
+  font-weight: inherit;
+  text-transform: none;
+}
+
+table.table {
+  border: 0.5px solid #000;
 }

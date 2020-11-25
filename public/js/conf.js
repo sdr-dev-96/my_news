@@ -1,1 +1,0 @@
-const TINY_API_KEY = 'krv597f0lntmoql4pleud9dhetegviaildb4hjyx1rs7d07s';

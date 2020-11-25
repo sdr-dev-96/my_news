@@ -55,15 +55,13 @@ class ArticleType extends AbstractType
                 ),
             ])
             ->add('online', ChoiceType::class, [
-                'label' =>  'En ligne',
-                'attr'          =>  array(
-                    'class'     => 'form-control'
-                ),
+                'label' =>  'En ligne *',
                 'choices'   =>  [
                     'Oui'   =>  true,
                     'Non'   =>  false
                 ],
-                'required'  => true,
+                'required'  =>  true,
+                'expanded'  =>  true,
                 'multiple'  =>  false,
             ])
         ;

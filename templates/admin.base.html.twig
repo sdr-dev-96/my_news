@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+{% set article_uris     = ['article_index', 'article_new', 'article_edit'] %}
+{% set category_uris    = ['categorie_index', 'categorie_new', 'categorie_edit'] %}
+{% set commentaire_uris = ['commentaire_index', 'commentaire_new', 'commentaire_edit'] %}
+{% set user_uris        = ['user_index', 'user_new', 'user_edit'] %}
 <html>
     <head>
         <meta charset="UTF-8">
@@ -23,15 +27,8 @@
                 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                     <div class="sidebar-sticky">
                         <ul id="admin-dashboard" class="nav flex-column">
-                            {#<li class="nav-item">
-                                <a class="nav-link {% if app.request.get('_route') == 'admin' %}active{% endif %}" href="#">
-                                    <i class="fas fa-home"></i>
-                                    &nbsp;Dashboard
-                                </a>
-                            </li>
-                            <div class="dropdown-divider"></div>#}
                             <li class="nav-item">
-                                <a class="nav-link {% if app.request.get('_route') == 'article_index' %}active{% endif %}" 
+                                <a id="article_link" class="nav-link {% if app.request.get('_route') in article_uris %}active{% endif %}" 
                                     href="{{ path('article_index') }}">
                                     <i class="fas fa-newspaper"></i>
                                     &nbsp;Articles
@@ -39,7 +36,7 @@
                             </li>
                             <div class="dropdown-divider"></div>
                             <li class="nav-item">
-                                <a class="nav-link {% if app.request.get('_route') == 'categorie_index' %}active{% endif %}" 
+                                <a id="categorie_link" class="nav-link {% if app.request.get('_route') in category_uris %}active{% endif %}" 
                                     href="{{ path('categorie_index') }}">
                                     <i class="fas fa-archive"></i>
                                     &nbsp;Catégories
@@ -47,14 +44,16 @@
                             </li>
                             <div class="dropdown-divider"></div>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a id="commentaire_link" class="nav-link {% if app.request.get('_route') in commentaire_uris %}active{% endif %}" 
+                                    href="{{ path('commentaire_index') }}">
                                     <i class="fas fa-comments"></i>
                                     &nbsp;Commentaires
                                 </a>
                             </li>
                             <div class="dropdown-divider"></div>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a id="user_link" class="nav-link {% if app.request.get('_route') in user_uris %}active{% endif %}" 
+                                    href="{{ path('user_index') }}">
                                     <i class="fas fa-users"></i>
                                     &nbsp;Utilisateurs
                                 </a>

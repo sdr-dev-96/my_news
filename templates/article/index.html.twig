@@ -8,7 +8,7 @@
         Créer un article&nbsp;&nbsp;<i class="fas fa-plus"></i>
     </a>
     <br>
-    <table class="table table-striped rounded">
+    <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
                 <th>#</th>
@@ -17,11 +17,11 @@
                 <th>Mis à jour</th>
                 <th>Image</th>
                 <th>En ligne</th>
-                <th>Actions</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-        {% for article in articles %}
+        {% for article in articles|sort((a,b) => a.titre <=> b.titre) %}
             <tr>
                 <td>{{ article.id }}</td>
                 <td>{{ article.titre }}</td>
