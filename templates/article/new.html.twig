@@ -16,7 +16,11 @@
     {% endfor %}
 
     <h1>Créer un article</h1>
-    {{ include('article/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    <div class="row">
+        <div class="col-12 col-md-8">
+            {{ include('article/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

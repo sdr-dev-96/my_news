@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% set exclude_uris = ['home', 'admin', 'app_login', 'app_register'] %}
 <html>
     <head>
         <meta charset="UTF-8">
@@ -48,7 +49,7 @@
             </div>
         </nav>
         <div class="container">
-            {% if app.request.get('_route') != 'admin' %}
+            {% if app.request.get('_route') not in exclude_uris %}
                 <!-- FIL D'ARIANE -->
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-white">

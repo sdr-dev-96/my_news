@@ -39,7 +39,9 @@ class CategorieController extends AbstractController
             $entityManager->persist($categorie);
             $entityManager->flush();
 
-            return $this->redirectToRoute('categorie_index');
+            return $this->redirectToRoute('categorie_edit', [
+                'id'    =>  $categorie->getId()
+            ]);
         }
 
         return $this->render('categorie/new.html.twig', [

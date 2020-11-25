@@ -1,43 +1,44 @@
 {% extends 'admin.base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
-
+    <h1>Liste des Utilisateurs</h1>
+    <a class="btn btn-success" href="{{ path('user_new') }}">
+        Ajouter un utilisateur&nbsp;&nbsp;<i class="fas fa-plus"></i>
+    </a>
+    <br>
     <table class="table table-striped">
-        <thead>
+        <thead class="thead-dark">
             <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
+                <th>#</th>
                 <th>Nom</th>
                 <th>Prenom</th>
-                <th>actions</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
                 <td>{{ user.nom }}</td>
                 <td>{{ user.prenom }}</td>
-                <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                <td>{{ user.email }}</td>
+                <td>{{ user.getRolesList }}</td>
+                <td width="10%" align="center">
+                    <a class="btn btn-outline-info" href="{{ path('user_edit', {'id': user.id}) }}"
+                        title="Modifier l'utilisateur">
+                        <i class="fas fa-edit"></i>
+                    </a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="6">Aucun utilisateur</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('user_new') }}">Create new</a>
 {% endblock %}

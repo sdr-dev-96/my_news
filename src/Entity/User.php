@@ -67,6 +67,11 @@ class User implements UserInterface
      */
     private $commentaires;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $creation;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
@@ -120,6 +125,15 @@ class User implements UserInterface
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
+    }
+
+    /**
+     * Permet de récupérer la liste des rôles au format string
+     * @return  string
+     */
+    public function getRolesList(): string
+    {
+        return ($this->roles) ? implode('/ ', $this->roles) : 'Aucun rôle attribué';
     }
 
     public function setRoles(array $roles): self
@@ -288,5 +302,17 @@ class User implements UserInterface
     public function getInitiales(): string
     {
         return strtoupper(substr($this->prenom, 0, 1) . substr($this->nom, 0, 1));
+    }
+
+    public function getCreation(): ?\DateTimeInterface
+    {
+        return $this->creation;
+    }
+
+    public function setCreation(\DateTimeInterface $creation): self
+    {
+        $this->creation = $creation;
+
+        return $this;
     }
 }
