@@ -36,6 +36,32 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    /**
+     * Permet de récupérer un user au hasard avec un rôle précis
+     * 
+     * @param   string      $_role  rôle de l'user cherché
+     * 
+     * @return  User|false
+     */
+    public function findRandomUserByRole($_role = null)
+    {
+        if(!empty($_role)) {
+            $result =  $this->createQueryBuilder('u')
+                ->addSelect('u')
+                ->where('u.roles LIKE :role')
+                ->setParameter('role', $_role)
+                ->orderBy('RAND()')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getResult()
+            ;
+            if(!empty($result) && is_array($result) && array_key_exists(0, $result)) {
+                return $result[0];
+            }
+        }
+        return false;
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

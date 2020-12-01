@@ -21,16 +21,28 @@ class ArticleRepository extends ServiceEntityRepository
     
     /**
      * Permet de récupérer un article au hazard
+     * 
+     * @param   bool            $_online
+     * 
+     * @return  Article|false
      */
-    public function findRandomArticle()
+    public function findRandomArticle(bool $_online)
     {
-        return $this->createQueryBuilder('a')
-            ->addSelect('a')
-            ->orderBy('RAND()')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getResult()
-        ;
+        if(!empty($_online) && is_bool($_online)) {
+            $result = $this->createQueryBuilder('a')
+                ->addSelect('a')
+                ->where('a.online = :online')
+                ->setParameter('online', $_online)
+                ->orderBy('RAND()')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getResult()
+            ;
+            if(!empty($result) && is_array($result) && array_key_exists(0, $result)) {
+                return $result[0];
+            }
+        }
+        return false;
     }
 
     // /**

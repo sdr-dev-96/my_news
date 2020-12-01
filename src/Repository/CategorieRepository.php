@@ -19,6 +19,26 @@ class CategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, Categorie::class);
     }
 
+    /**
+     * Permet de récupérer une catégorie au hasard
+     * 
+     * @return  Categorie|false
+     */
+    public function findRandomCategorie()
+    {
+        $result = $this->createQueryBuilder('c')
+            ->addSelect('c')
+            ->orderBy('RAND()')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+        if(!empty($result) && is_array($result) && array_key_exists(0, $result)) {
+            return $result[0];
+        }
+        return false;
+    }
+
     // /**
     //  * @return Categorie[] Returns an array of Categorie objects
     //  */

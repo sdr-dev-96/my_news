@@ -6,60 +6,52 @@ use App\Entity\User;
 use App\Entity\Article;
 use App\Entity\Categorie;
 use App\Entity\Commentaire;
-
+use App\Repository\CategorieRepository;
+use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\DataFixtures\CategorieFixtures;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class ArticleFixtures extends Fixture
+class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
+    private $_categorieRepo;
+    private $_userRepo;
 
-    private $passwordEncoder;
-
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(CategorieRepository $categorieRepo, UserRepository $userRepo)
     {
-        $this->passwordEncoder = $passwordEncoder;
+        $this->_categorieRepo   = $categorieRepo;
+        $this->_userRepo        = $userRepo;
     }
 
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
-        
-        //Catégories
-        $arrayCategories = array(
-            'Economie', 
-            'Sciences',
-            'Tech',
-            'Monde',
-            'Sport',
-            'Politique',
-            'Santé'
-        );
-        $randCategorie = [];
-        foreach($arrayCategories as $cat) {
-            $categorie = new Categorie();
-            if($faker->hexcolor != '#ffffff' && $faker->hexcolor != '#000000') {
-                $categorie->setCouleur($faker->hexcolor);
-            }
-            $manager->persist($categorie);
-            $randCategorie[] = $categorie;
-        }
-        $manager->flush();
 
         // Articles
         for($i = 0; $i <= 100; $i++) {
-            $article = new Article();
-            $article->setTitre($faker->sentence($nbWords = 6, $variableNbWords = true))
+            $article    = new Article();
+            $categorie  = $this->_categorieRepo->findRandomCategorie();
+            $writer     = $this->_userRepo->findRandomUserByRole('["ROLE_ECRIVAIN"]');
+            $article->setTitre(str_replace('.', '', $faker->sentence($nbWords = 6, $variableNbWords = true)))
                 ->setContenu($faker->text($maxNbChars = 2000))
                 ->setCreation($faker->dateTimeBetween($startDate = '-10 years', $endDate = '-1 month', $timezone = null))
                 ->setModification(null)
                 ->setEcrivain($writer)
                 ->setImage(null)
                 ->setCategorie($categorie)
+                ->setOnline(rand(0,1) == 1)
             ;
             $manager->persist($article);
         }
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return array(
+            CategorieFixtures::class,
+        );
     }
 }
