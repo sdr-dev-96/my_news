@@ -20,18 +20,20 @@ class CommentaireFixture extends Fixture implements DependentFixtureInterface
 
     public function __construct(ArticleRepository $articleRepo, UserRepository $userRepo)
     {
-        $this->_userRepo    = $articleRepo;
-        $this->_articleRepo = $userRepo;
+        $this->_userRepo    = $userRepo;
+        $this->_articleRepo = $articleRepo;
     }
 
     public function load(ObjectManager $manager)
     {
+        $faker = Factory::create('fr_FR');
+        
         for($j = 0; $j < 20; $j++) {
             // Commentaire
             $article    = $this->_articleRepo->findRandomArticle(rand(0,1));
             $user       = $this->_userRepo->findRandomUserByRole('["ROLE_USER"]');
             $comm       = new Commentaire();
-            $comm->setUser($foo)
+            $comm->setUser($user)
                 ->setArticle($article)
                 ->setNote($faker->numberBetween($min = 0, $max = 5))
                 ->setTexte($faker->text($maxNbChars = 500))

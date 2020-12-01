@@ -19,7 +19,7 @@
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
             {% for cat in categories|sort((a, b) => a.libelle <=> b.libelle) %}
-                <a class="p-2 text-{{ cat.couleur }} font-weight-bold" href="{{ path('categorie_show', {'id': cat.id}) }}">
+                <a class="p-2 font-weight-bold" style="color: {{ cat.couleur }};" href="{{ path('categorie_show', {'id': cat.id}) }}">
                     {{ cat.libelle }}
                 </a>
             {% endfor %}
