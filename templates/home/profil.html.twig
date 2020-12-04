@@ -8,8 +8,8 @@
 
 {% block body %}
     <div class="container section-block">
-        <h1>Mon Profil</h1>
-
+        <h1 class="text-center">Bonjour, {{ app.user.prenom }}</h1>
+        <br>
         <nav class="nav nav-tabs">
             <a class="nav-item nav-link active" href="#mes-infos" data-toggle="tab">Mes Informations</a>
             <a class="nav-item nav-link " href="#mes-favoris" data-toggle="tab">Mes Favoris</a>
