@@ -91,4 +91,19 @@ class CommentaireController extends AbstractController
 
         return $this->redirectToRoute('commentaire_index');
     }
+
+    /**
+     * @Route("/{id}/valid", name="commentaire_valid", methods={"PUT"})
+     */
+    public function validCommentaire(Commentaire $commentaire)
+    {
+        $response   = new JsonResponse(['message' => 'Une erreur est survenue !'], 500);
+        if($this->getUser()) {
+            $commentaire->setValid(true);
+            $this->getDoctrine()->getManager()->flush();
+            $response = new JsonResponse(['message' => 'Le commentaire a bien été validé !'], 200);
+        }
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
 }

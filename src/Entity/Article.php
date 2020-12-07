@@ -256,4 +256,9 @@ class Article
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->id . ' - ' . substr($this->titre, 0, 100);
+    }
 }

@@ -44,5 +44,27 @@ $(function() {
         })
     });
 
+    /**
+     * Permet de changer l'état d'un commentaire
+     */
+    $(document).on('click', '.valid-commentaire', function(e) {
+        e.preventDefault();
+        let commentaire_id = $(this).attr('commentaire-id');
+        $.ajax({
+            url: '/commentaire/' + commentaire_id + '/valid',
+            method: 'PUT',
+            async: true,
+            success: function(response) {
+                alert(response.message);
+                $(this).removeClass('btn-outline-success valid-commentaire');
+                $(this).addClass('btn-outline-danger');
+                $(this).html('<i class="fas fa-check"></i>');
+            },
+            error: function(response) {
+                console.error(response.message);
+            }
+        })
+    })
+
 
 })

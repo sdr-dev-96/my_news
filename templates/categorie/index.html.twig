@@ -14,7 +14,6 @@
                 <th>#</th>
                 <th>Libelle</th>
                 <th>Nb Articles</th>
-                <th>Couleur</th>
                 <th></th>
             </tr>
         </thead>
@@ -24,12 +23,13 @@
                 <td>{{ categorie.id }}</td>
                 <td>{{ categorie.libelle }}</td>
                 <td>{{ categorie.articles|length }}</td>
-                <td class="bg-{{ categorie.couleur }} border border-dark"></td>
                 <td width="10%" align="center">
-                    <a class="btn btn-outline-primary" href="{{ path('categorie_show', {'id': categorie.id}) }}">
+                    <a class="btn btn-outline-primary" href="{{ path('categorie_show', {'id': categorie.id}) }}"
+                        title="Voir la catégorie">
                         <i class="fas fa-eye"></i>
                     </a>
-                    <a class="btn btn-outline-info" href="{{ path('categorie_edit', {'id': categorie.id}) }}">
+                    <a class="btn btn-outline-info" href="{{ path('categorie_edit', {'id': categorie.id}) }}"
+                        title="Modifier la catégorie">
                         <i class="fas fa-edit"></i>
                     </a>
                 </td>

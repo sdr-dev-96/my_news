@@ -3,23 +3,11 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <!-- ARTICLE PAR DEFAUT -->
-    <div class="jumbotron text-white rounded bg-dark">
-        <div class="col-md-6 px-0">
-            <h1 class="display-4 font-italic">{{ randomArticle.titre }}</h1>
-            <p class="lead my-3">{{ randomArticle.contenu|slice(0, 200)}}...</p>
-            <p class="lead mb-0">
-                <a href="{{ path('article_show', {'id': randomArticle.id}) }}" class="text-white font-weight-bold">
-                Lire plus&nbsp;<i class="fas fa-angle-right"></i>
-                </a>
-            </p>
-        </div>
-    </div>
     <!-- CATEGORIES -->
-    <div class="nav-scroller py-1 mb-2">
+    <div id="list-categories" class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
             {% for cat in categories|sort((a, b) => a.libelle <=> b.libelle) %}
-                <a class="p-2 font-weight-bold" style="color: {{ cat.couleur }};" href="{{ path('categorie_show', {'id': cat.id}) }}">
+                <a class="p-2 font-weight-bold" href="{{ path('categorie_show', {'id': cat.id}) }}">
                     {{ cat.libelle }}
                 </a>
             {% endfor %}

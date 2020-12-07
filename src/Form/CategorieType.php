@@ -37,12 +37,6 @@ class CategorieType extends AbstractType
                     'class' =>  'form-control'
                 )
             ])
-            ->add('couleur', ChoiceType::class, [
-                'attr'      =>  array(
-                    'class' =>  'form-control'
-                ),
-                'choices'   =>  $couleurs
-            ])
         ;
     }
 
