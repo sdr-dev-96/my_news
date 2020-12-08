@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/commentaire")
@@ -93,15 +95,17 @@ class CommentaireController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/valid", name="commentaire_valid", methods={"PUT"})
+     * @Route("/{id}/valid/{etat}", name="commentaire_valid", methods={"PUT"})
      */
-    public function validCommentaire(Commentaire $commentaire)
+    public function validCommentaire(Commentaire $commentaire, int $etat)
     {
         $response   = new JsonResponse(['message' => 'Une erreur est survenue !'], 500);
         if($this->getUser()) {
-            $commentaire->setValid(true);
+            $commentaire->setValid($etat);
             $this->getDoctrine()->getManager()->flush();
-            $response = new JsonResponse(['message' => 'Le commentaire a bien été validé !'], 200);
+            $response = new JsonResponse([
+                'message' => ($etat == 1) ? 'Le commentaire a bien été validé !' : 'Le commentaire a été refusé !'
+            ], 200);
         }
         $response->headers->set('Content-Type', 'application/json');
         return $response;

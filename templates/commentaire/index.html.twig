@@ -13,22 +13,22 @@
                 <th>Article</th>
                 <th>Note</th>
                 <th>Crée le</th>
-                <th>En Ligne</th>
+                <th>Validé</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
         {% for commentaire in commentaires %}
-            <tr>
+            <tr id="commentaire_{{ commentaire.id }}">
                 <td>{{ commentaire.id }}</td>
                 <td>{{ commentaire.texte|slice(0, 100) }}...</td>
                 <td>{{ commentaire.article }}</td>
                 <td>{{ commentaire.note }} / 5</td>
                 <td>{{ commentaire.creation ? commentaire.creation|date('d/m/Y') : '' }}</td>
-                <td>{{ commentaire.valid ? 'On' : 'Off' }}</td>
+                <td class="valid-comm">{{ commentaire.valid ? 'Oui' : 'Non' }}</td>
                 <td>
                     {% if commentaire.valid %}
-                        <a class="btn btn-outline-danger" commentaire-id="{{ commentaire.id }}"
+                        <a class="btn btn-outline-danger refuse-commentaire" commentaire-id="{{ commentaire.id }}"
                             href="#" title="Refuser le commentaire">
                             <i class="fas fa-times"></i>
                         </a>
@@ -38,14 +38,6 @@
                             <i class="fas fa-check"></i>
                         </a>
                     {% endif %}
-                    {#<a class="btn btn-outline-primary" href="{{ path('commentaire_show', {'id': commentaire.id}) }}"
-                        title="Voir le commentaire">
-                        <i class="fas fa-eye"></i>
-                    </a>
-                    <a class="btn btn-outline-info" href="{{ path('commentaire_edit', {'id': commentaire.id}) }}"
-                        title="Modifier le commentaire">
-                        <i class="fas fa-edit"></i>
-                    </a>#}
                 </td>
             </tr>
         {% else %}
