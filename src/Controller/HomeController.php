@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\RegisterType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategorieRepository;
 
@@ -32,7 +32,7 @@ class HomeController extends AbstractController
     public function profil(Request $request)
     {
         $user = $this->getUser();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {            
             $user           = $form->getData();

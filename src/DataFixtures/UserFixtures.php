@@ -65,7 +65,7 @@ class UserFixtures extends Fixture
                 ->setPassword($this->_passwordEncoder->encodePassword($writer, $faker->password))
                 ->setNom($faker->lastName)
                 ->setPrenom($faker->firstName)
-                ->setRoles(['ROLE_ECRIVAIN'])
+                ->setRoles(['ROLE_AUTHOR'])
                 ->setCreation($faker->dateTime($max = '-5 years', $timezone = null))
             ;
             $manager->persist($writer);

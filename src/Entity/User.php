@@ -72,6 +72,16 @@ class User implements UserInterface
      */
     private $creation;
 
+    /**
+     * @Assert\Length(max=4096)
+     */
+    private $roleChoice;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $modification;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
@@ -312,6 +322,30 @@ class User implements UserInterface
     public function setCreation(\DateTimeInterface $creation): self
     {
         $this->creation = $creation;
+
+        return $this;
+    }
+
+    public function getRoleChoice(): string
+    {
+        return $this->roleChoice;
+    }
+
+    public function setRoleChoice(string $roleChoice): self
+    {
+        $this->setRoles([$this->roleChoice]);
+
+        return $this;
+    }
+
+    public function getModification(): ?\DateTimeInterface
+    {
+        return $this->modification;
+    }
+
+    public function setModification(\DateTimeInterface $modification): self
+    {
+        $this->modification = $modification;
 
         return $this;
     }

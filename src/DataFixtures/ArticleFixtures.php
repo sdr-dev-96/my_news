@@ -33,7 +33,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         for($i = 0; $i <= 100; $i++) {
             $article    = new Article();
             $categorie  = $this->_categorieRepo->findRandomCategorie();
-            $writer     = $this->_userRepo->findRandomUserByRole('["ROLE_ECRIVAIN"]');
+            $writer     = $this->_userRepo->findRandomUserByRole('["ROLE_AUTHOR"]');
             $article->setTitre(str_replace('.', '', $faker->sentence($nbWords = 6, $variableNbWords = true)))
                 ->setContenu($faker->text($maxNbChars = 2000))
                 ->setCreation($faker->dateTimeBetween($startDate = '-10 years', $endDate = '-1 month', $timezone = null))
