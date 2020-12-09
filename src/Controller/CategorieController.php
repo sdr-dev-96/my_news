@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/categorie")
@@ -53,10 +54,16 @@ class CategorieController extends AbstractController
     /**
      * @Route("/{id}", name="categorie_show", methods={"GET"})
      */
-    public function show(Categorie $categorie): Response
+    public function show(Categorie $categorie, Request $request, PaginatorInterface $paginator): Response
     {
+        $articles = $paginator->paginate(
+            $categorie->getArticles(),
+            $request->query->getInt('page', 1),
+            6
+        );
         return $this->render('categorie/show.html.twig', [
             'categorie' => $categorie,
+            'articles'  =>  $articles
         ]);
     }
 
