@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/user")
@@ -17,6 +18,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     /**
+	 * @IsGranted("ROLE_ADMIN")
      * @Route("/", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository): Response
@@ -27,6 +29,7 @@ class UserController extends AbstractController
     }
 
     /**
+	 * @IsGranted("ROLE_ADMIN")
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
@@ -38,6 +41,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $user->setCreation(new \Datetime('now'));
+            $user->setRoles([$user->getRoleChoice()]);
             $user->setPassword($passwordEncoder->encodePassword($user, $user->getPlainPassword()));
             $entityManager->persist($user);
             $entityManager->flush();
@@ -54,6 +58,7 @@ class UserController extends AbstractController
     }
 
     /**
+	 * @IsGranted("ROLE_ADMIN")
      * @Route("/{id}", name="user_show", methods={"GET"})
      */
     public function show(User $user): Response
@@ -64,6 +69,7 @@ class UserController extends AbstractController
     }
 
     /**
+	 * @IsGranted("ROLE_ADMIN")
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, User $user): Response
@@ -72,6 +78,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setRoles([$user->getRoleChoice()]);
             $user->setModification(new \Datetime('now'));
             $this->getDoctrine()->getManager()->flush();
 
@@ -85,6 +92,7 @@ class UserController extends AbstractController
     }
 
     /**
+	 * @IsGranted("ROLE_ADMIN")
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
      */
     public function delete(Request $request, User $user): Response

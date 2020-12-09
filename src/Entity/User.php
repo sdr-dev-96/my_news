@@ -333,7 +333,7 @@ class User implements UserInterface
 
     public function setRoleChoice(string $roleChoice): self
     {
-        $this->setRoles([$this->roleChoice]);
+        $this->roleChoice = $roleChoice;
 
         return $this;
     }
