@@ -3,8 +3,15 @@
         <img class="mr-2 rounded" src="http://placehold.it/100?text={{ comm.user.getInitiales }}" alt="{{ comm.user }}">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">{{ comm.user }}</strong>
-            <span class="d-block text-muted small">{{ comm.creation|date('j F - H:i') }}</span>
+            {% for i in 1..comm.note %}
+                <span class="fa fa-star checked text-warning"></span>
+            {% endfor %}
+            {% for j in (comm.note+1)..5 %}
+                <span class="fa fa-star text-secondary"></span>
+            {% endfor %}
+            <br>
             {{ comm.texte }}
+            <span class="d-block text-muted small">{{ comm.creation|date('j F - H:i') }}</span>
         </p>
     </div>
 {% else %}
