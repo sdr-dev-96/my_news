@@ -25,4 +25,6 @@
 {% else %}
     Aucun article dans cette catégorie ...
 {% endfor %}
-{{ knp_pagination_render(articles) }}
+<div class="articles-pagination">
+    {{ knp_pagination_render(articles) }}
+</div>
