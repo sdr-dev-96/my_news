@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% set exclude_uris = ['home', 'admin', 'app_login', 'app_register'] %}
+{% set exclude_uris = ['home', 'admin', 'app_login', 'app_register', 'user_profil'] %}
 <html>
     <head>
         <meta charset="UTF-8">
@@ -19,8 +19,11 @@
                     <div class="col-12 col-sm-4">
                         <a class="blog-header-logo text-dark" href="{{ path('home') }}">My News</a>
                     </div>
-                    <div class="col-4 d-flex justify-content-end align-items-center">
+                    <div class="col d-flex justify-content-end align-items-center">
                         {% if app.user %}
+                            <a class="nav-link" href="{{ path('home') }}">
+                                Accueil
+                            </a>
                             <a class="nav-link" href="{{ path('admin') }}">
                                 Dashboard
                             </a>
