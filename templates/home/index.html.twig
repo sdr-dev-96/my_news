@@ -17,4 +17,7 @@
     <div class="row mb-2" id="home-articles">
         {{ include('article/_articles.html.twig', {'articles' : articles, 'container': '#home-articles'}) }}
     </div>
+    <div class="articles-pagination">
+        {{ knp_pagination_render(articles) }}
+    </div>
 {% endblock %}
