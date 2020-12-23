@@ -24,11 +24,13 @@
                             <a class="nav-link" href="{{ path('home') }}">
                                 Accueil
                             </a>
-                            <a class="nav-link" href="{{ path('admin') }}">
-                                Dashboard
-                            </a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="nav-link" href="{{ path('admin') }}">
+                                    Dashboard
+                                </a>
+                            {% endif %}
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Bonjour, {{ app.user.prenom|capitalize}}
+                                <i class="fas fa-user"></i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ path('user_profil', {'_fragment': 'mes-infos'}) }}">
