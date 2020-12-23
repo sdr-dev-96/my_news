@@ -40,3 +40,11 @@
 #profil-message {
     margin: 1em auto;
 }
+
+#list-categories {
+    margin: 20px auto;
+}
+
+.bloc-article .card {
+    height: 330px;
+}
