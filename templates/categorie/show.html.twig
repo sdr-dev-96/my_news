@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ categorie.libelle }}</h1>
+    <h1 class="text-center">{{ categorie.libelle }}</h1>
     <!-- ARTICLES -->
     <div class="row mb-2" id="categorie-articles">
         {{ include('article/_articles.html.twig', {'articles' : articles, 'container': '#categorie-articles'}) }}
