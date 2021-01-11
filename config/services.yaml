@@ -27,6 +27,11 @@ services:
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
+        
+    Symfony\Component\Serializer\Normalizer\DateTimeNormalizer:
+        arguments:
+            $defaultContext:
+                datetime_format: 'Y-m-d'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

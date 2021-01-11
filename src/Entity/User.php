@@ -8,9 +8,16 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ApiResource(
+ *     normalizationContext={"groups"={"ecrivain:read"}},
+ *     denormalizationContext={"groups"={"ecrivain:write"}}
+ * )
  */
 class User implements UserInterface
 {
@@ -23,6 +30,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"ecrivain:read", "article:read"})
      */
     private $email;
 
@@ -44,11 +52,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"ecrivain:read", "article:read"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"ecrivain:read", "article:read"})
      */
     private $prenom;
 
@@ -87,6 +97,7 @@ class User implements UserInterface
         $this->favoris = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->roleChoice = "";
     }
 
     /**
@@ -326,7 +337,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRoleChoice(): string
+    public function getRoleChoice()
     {
         return $this->roleChoice;
     }

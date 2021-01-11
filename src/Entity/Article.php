@@ -6,9 +6,15 @@ use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
+ * @ApiResource(
+ *     normalizationContext={"groups"={"article:read"}},
+ *     denormalizationContext={"groups"={"article:write"}}
+ * )
  */
 class Article
 {
@@ -21,26 +27,31 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("article:read")
      */
     private $titre;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("article:read")
      */
     private $creation;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups("article:read")
      */
     private $modification;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("article:read")
      */
     private $contenu;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("article:read")
      */
     private $image;
 
@@ -52,12 +63,14 @@ class Article
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("article:read")
      */
     private $ecrivain;
 
     /**
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("article:read")
      */
     private $categorie;
 
