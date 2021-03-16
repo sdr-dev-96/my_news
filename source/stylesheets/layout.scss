@@ -1,0 +1,82 @@
+$font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+
+.blog-header-logo {
+	font-family: $font-family;
+	font-size: 2.25rem;
+}
+
+.bloc-article {
+	position: relative;
+	.card {
+		height: 330px;
+	}
+
+}
+
+.add-favori {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	color: red;
+	background-color: white;
+	padding: 10px;
+	border-radius: 100%;
+	&:hover {
+		cursor: pointer;
+		background-color: #E0E0E0;
+	}
+
+}
+
+.remove-favori {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	color: red;
+	background-color: white;
+	padding: 10px;
+	border-radius: 100%;
+	&:hover {
+		cursor: pointer;
+		background-color: #E0E0E0;
+	}
+
+}
+
+#list-categories {
+	a {
+		color: #000;
+	}
+
+	margin: 20px auto;
+}
+
+.nav-link {
+	color: #000;
+	&:hover {
+		color: #3e3e3e;
+		text-decoration: underline;
+	}
+
+}
+
+#profil-message {
+	margin: 1em auto;
+}
+
+.tab-pane {
+	h2 {
+		margin: 1em auto;
+	}
+
+}
+
+.blog-footer {
+	.footer-links {
+		a {
+			color: #999 !important;
+		}
+
+	}
+
+}

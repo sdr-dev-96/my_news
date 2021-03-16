@@ -1,0 +1,30 @@
+$black: #000;
+$grey: #5f5f5f;
+
+.articles-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    nav {
+        height: 100px;
+    }
+    
+}
+
+.page-item {
+    &:hover {
+        color: $grey;
+    }
+    &.active {
+        .page-link {
+            background-color: $black;
+            border-color: $black;
+        }
+    }
+
+    .page-link {
+        color: $black;
+    }
+}

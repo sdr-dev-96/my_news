@@ -65,8 +65,15 @@
                     </ol>
                 </nav>
             {% endif %}
-            {% block body %}{% endblock %}
         </div>
+        <main class="container">
+            {% block body %}{% endblock %}
+        </main>
+        <footer class="blog-footer">
+            <div class="footer-links">
+                <a href="/contact">Contact</a>
+            </div>
+        </footer>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js" defer></script>        
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -76,7 +83,7 @@
                 let idUser = {{ app.user.getId }};
             </script>
         {% endif %}
-        <script src="{{ asset('js/app.js?2020') }}"></script>
+        <script src="{{ asset('js/app.min.js?2020') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
