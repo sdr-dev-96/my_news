@@ -2,16 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Entity\Article;
+use App\Entity\Categorie;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use App\Entity\User;
 use App\Form\ProfilType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategorieRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class HomeController extends AbstractController
 {
@@ -34,7 +38,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/profil", name="user_profil", methods={"GET", "POST"})
      */
-    public function profil(Request $request)
+    public function profil(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = $this->getUser();
         $form = $this->createForm(ProfilType::class, $user);

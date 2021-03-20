@@ -4,7 +4,7 @@
 
 {% block fil_ariane %}
     <li class="breadcrumb-item" aria-current="page">
-        <a href="{{ path('categorie_show', {'id': article.categorie.id}) }}">{{ article.categorie.libelle }}</a>
+        <a href="{{ path('categorie_show', {'url': article.categorie.url}) }}">{{ article.categorie.libelle }}</a>
     </li>
     <li class="breadcrumb-item text-dark active" aria-current="page">{{ article.titre|slice(0, 20)}} ... </li>
 {% endblock %}

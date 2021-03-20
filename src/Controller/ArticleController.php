@@ -12,13 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * @Route("/article")
- */
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/", name="article_index", methods={"GET"})
+     * @Route("/articles/", name="article_index", methods={"GET"})
      */
     public function index(ArticleRepository $articleRepository): Response
     {
@@ -28,7 +25,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="article_new", methods={"GET","POST"})
+     * @Route("/article/new", name="article_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -42,7 +39,7 @@ class ArticleController extends AbstractController
                 ->setEcrivain($this->getUser())
                 ->setModification(new \Datetime('now'))
                 ->setCreation(new \Datetime('now'));
-                
+            $article->setUrl($this->generate_url($article->getTitre()));
             if (!empty($form->get('image')->getData())) {
                 $file       = $form->get('image')->getData();
                 $fileName   = $file->getClientOriginalName();
@@ -68,7 +65,7 @@ class ArticleController extends AbstractController
 
     /**
 	 * @IsGranted("ROLE_USER")
-     * @Route("/{id}", name="article_show", methods={"GET"})
+     * @Route("/{id}-{url}.html", name="article_show", methods={"GET"})
      */
     public function show(Article $article): Response
     {
@@ -79,7 +76,7 @@ class ArticleController extends AbstractController
 
     /**
 	 * @IsGranted("ROLE_WRITER")
-     * @Route("/{id}/edit", name="article_edit", methods={"GET","POST"})
+     * @Route("/article/edit/{id}", name="article_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Article $article): Response
     {
@@ -88,7 +85,7 @@ class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $article->setModification(new \Datetime('now'));
-
+            $article->setUrl($this->generate_url($article->getTitre()));
             if (!empty($form->get('image')->getData())) {
                 $file       = $form->get('image')->getData();
                 $fileName   = $file->getClientOriginalName();
@@ -110,7 +107,7 @@ class ArticleController extends AbstractController
 
     /**
 	 * @IsGranted("ROLE_ADMIN")
-     * @Route("/{id}", name="article_delete", methods={"DELETE"})
+     * @Route("/article/{id}", name="article_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Article $article): Response
     {
@@ -123,5 +120,28 @@ class ArticleController extends AbstractController
         return $this->redirectToRoute('article_index');
     }
 
-   
+    /**
+     * Permet de générer une url à partir d'une chaîne de caractères
+     * 
+     * @author  Roro-Dev    <stefanedr.dev@gmail>
+     * 
+     * @param   string      $string
+     * 
+     * @return  string
+     */
+    private function generate_url(string $string): string
+    {
+        $url = "";
+        if(!empty($string)) {
+            $unwanted_array = array('Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
+            'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
+            'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
+            'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', ' ' => '-', '--' => '-');
+            $string = strtr( $string, $unwanted_array);
+            $url = urlencode($string);
+            $url = strtolower($url);
+        }
+        return $url;
+    }
 }

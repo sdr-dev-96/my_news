@@ -16,7 +16,7 @@
     {% endfor %}
     
     <h1>Modifier un article</h1>
-    <a class="btn btn-outline-primary text-primary" href="{{ path('article_show', {'id': article.id}) }}"
+    <a class="btn btn-outline-primary text-primary" href="{{ path('article_show', {'id': article.id, 'url': article.url}) }}"
         title="Voir l'article sur le site" target="_blank">
         <i class="fas fa-eye"></i>
         &nbsp;&nbsp;Voir sur le site

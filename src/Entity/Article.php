@@ -84,6 +84,11 @@ class Article
      */
     private $online;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $url;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -273,5 +278,17 @@ class Article
     public function __toString(): string
     {
         return $this->id . ' - ' . substr($this->titre, 0, 100);
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
     }
 }
