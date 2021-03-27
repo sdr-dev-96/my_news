@@ -65,7 +65,7 @@ class ArticleController extends AbstractController
 
     /**
 	 * @IsGranted("ROLE_USER")
-     * @Route("/{id}-{url}.html", name="article_show", methods={"GET"})
+     * @Route("/{id}/{url}.html", name="article_show", methods={"GET"})
      */
     public function show(Article $article): Response
     {
