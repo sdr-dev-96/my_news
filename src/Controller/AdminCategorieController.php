@@ -9,24 +9,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Knp\Component\Pager\PaginatorInterface;
 
-class CategorieController extends AbstractController
+/**
+ * @IsGranted("ROLE_ADMIN")
+ * @Route("/admin/categorie")
+ */ 
+class AdminCategorieController extends AbstractController
 {
+
+    private $_pathTemplates = "admin/categorie/";
+
     /**
-     * @Route("/categorie/", name="categorie_index", methods={"GET"})
+     * @Route("/", name="categorie_index", methods={"GET"})
      */
-    public function index(CategorieRepository $categorieRepository): Response
+    public function categorieIndex(CategorieRepository $categorieRepository): Response
     {
-        return $this->render('categorie/index.html.twig', [
+        return $this->render($this->_pathTemplate . 'index.html.twig', [
             'categories' => $categorieRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/categorie/new", name="categorie_new", methods={"GET","POST"})
+     * @Route("/new", name="categorie_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function categorieNew(Request $request): Response
     {
         $categorie = new Categorie();
         $form = $this->createForm(CategorieType::class, $categorie);
@@ -43,32 +49,16 @@ class CategorieController extends AbstractController
             ]);
         }
 
-        return $this->render('categorie/new.html.twig', [
+        return $this->render($this->_pathTemplate . 'new.html.twig', [
             'categorie' => $categorie,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{url}", name="categorie_show", methods={"GET"})
+     * @Route("/edit/{id}", name="categorie_edit", methods={"GET","POST"})
      */
-    public function show(Categorie $categorie, Request $request, PaginatorInterface $paginator): Response
-    {
-        $articles = $paginator->paginate(
-            $categorie->getArticles(),
-            $request->query->getInt('page', 1),
-            6
-        );
-        return $this->render('categorie/show.html.twig', [
-            'categorie' => $categorie,
-            'articles'  =>  $articles
-        ]);
-    }
-
-    /**
-     * @Route("/categorie/edit/{id}", name="categorie_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Categorie $categorie): Response
+    public function categorieEdit(Request $request, Categorie $categorie): Response
     {
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
@@ -80,16 +70,16 @@ class CategorieController extends AbstractController
             return $this->redirectToRoute('categorie_index');
         }
 
-        return $this->render('categorie/edit.html.twig', [
+        return $this->render($this->_pathTemplate . 'edit.html.twig', [
             'categorie' => $categorie,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/categorie/{id}", name="categorie_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="categorie_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Categorie $categorie): Response
+    public function categorieDelete(Request $request, Categorie $categorie): Response
     {
         if ($this->isCsrfTokenValid('delete'.$categorie->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

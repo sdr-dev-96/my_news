@@ -13,57 +13,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @Route("/commentaire")
- */
-class CommentaireController extends AbstractController
+ * @Route("/admin/commentaire")
+ */ 
+class AdminCommentaireController extends AbstractController
 {
+
+    private $_pathTemplates = "admin/commentaire/";
+
     /**
      * @Route("/", name="commentaire_index", methods={"GET"})
      */
-    public function index(CommentaireRepository $commentaireRepository): Response
+    public function commentaireIndex(CommentaireRepository $commentaireRepository): Response
     {
-        return $this->render('commentaire/index.html.twig', [
+        return $this->render($this->_pathTemplate . 'index.html.twig', [
             'commentaires' => $commentaireRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="commentaire_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $commentaire = new Commentaire();
-        $form = $this->createForm(CommentaireType::class, $commentaire);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($commentaire);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('commentaire_index');
-        }
-
-        return $this->render('commentaire/new.html.twig', [
-            'commentaire' => $commentaire,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="commentaire_show", methods={"GET"})
-     */
-    public function show(Commentaire $commentaire): Response
-    {
-        return $this->render('commentaire/show.html.twig', [
-            'commentaire' => $commentaire,
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="commentaire_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Commentaire $commentaire): Response
+    public function commentairEdit(Request $request, Commentaire $commentaire): Response
     {
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
@@ -74,7 +44,7 @@ class CommentaireController extends AbstractController
             return $this->redirectToRoute('commentaire_index');
         }
 
-        return $this->render('commentaire/edit.html.twig', [
+        return $this->render($this->_pathTemplate . 'edit.html.twig', [
             'commentaire' => $commentaire,
             'form' => $form->createView(),
         ]);
@@ -83,7 +53,7 @@ class CommentaireController extends AbstractController
     /**
      * @Route("/{id}", name="commentaire_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Commentaire $commentaire): Response
+    public function commentaireDelete(Request $request, Commentaire $commentaire): Response
     {
         if ($this->isCsrfTokenValid('delete'.$commentaire->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -97,11 +67,11 @@ class CommentaireController extends AbstractController
     /**
      * @Route("/{id}/valid/{etat}", name="commentaire_valid", methods={"PUT"})
      */
-    public function validCommentaire(Commentaire $commentaire, int $etat)
+    public function commentaireValid(Commentaire $commentaire, int $etat)
     {
         $response   = new JsonResponse(['message' => 'Une erreur est survenue !'], 500);
         if($this->getUser()) {
-            $commentaire->setValid($etat);
+            $commentaire->setValid(($etat == 1));
             $this->getDoctrine()->getManager()->flush();
             $response = new JsonResponse([
                 'message' => ($etat == 1) ? 'Le commentaire a bien été validé !' : 'Le commentaire a été refusé !'
