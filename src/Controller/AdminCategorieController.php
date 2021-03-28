@@ -24,7 +24,7 @@ class AdminCategorieController extends AbstractController
      */
     public function categorieIndex(CategorieRepository $categorieRepository): Response
     {
-        return $this->render($this->_pathTemplate . 'index.html.twig', [
+        return $this->render($this->_pathTemplate . 'categorie_index.html.twig', [
             'categories' => $categorieRepository->findAll(),
         ]);
     }
@@ -49,7 +49,7 @@ class AdminCategorieController extends AbstractController
             ]);
         }
 
-        return $this->render($this->_pathTemplate . 'new.html.twig', [
+        return $this->render($this->_pathTemplate . 'categorie_new.html.twig', [
             'categorie' => $categorie,
             'form' => $form->createView(),
         ]);
@@ -70,7 +70,7 @@ class AdminCategorieController extends AbstractController
             return $this->redirectToRoute('categorie_index');
         }
 
-        return $this->render($this->_pathTemplate . 'edit.html.twig', [
+        return $this->render($this->_pathTemplate . 'categorie_edit.html.twig', [
             'categorie' => $categorie,
             'form' => $form->createView(),
         ]);

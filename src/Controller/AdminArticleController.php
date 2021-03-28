@@ -25,7 +25,7 @@ class AdminArticleController extends AbstractController
      */
     public function articleIndex(ArticleRepository $articleRepository): Response
     {
-        return $this->render($this->_pathTemplate . 'index.html.twig', [
+        return $this->render($this->_pathTemplate . 'article_index.html.twig', [
             'articles' => $articleRepository->findAll(),
         ]);
     }
@@ -63,7 +63,7 @@ class AdminArticleController extends AbstractController
             ]);
         }
 
-        return $this->render($this->_pathTemplate . 'new.html.twig', [
+        return $this->render($this->_pathTemplate . 'article_new.html.twig', [
             'article'   => $article,
             'form'      => $form->createView(),
         ]);
@@ -94,7 +94,7 @@ class AdminArticleController extends AbstractController
             $this->addFlash('success', 'L\'article a bien été modifié !');
         }
 
-        return $this->render($this->_pathTemplate . 'edit.html.twig', [
+        return $this->render($this->_pathTemplate . 'article_edit.html.twig', [
             'article'   => $article,
             'form'      => $form->createView(),
         ]);

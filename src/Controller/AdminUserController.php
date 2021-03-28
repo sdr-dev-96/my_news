@@ -13,23 +13,25 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @Route("/user")
+ * @IsGranted("ROLE_ADMIN")
+ * @Route("/admin/user")
  */
-class UserController extends AbstractController
+class AdminUserController extends AbstractController
 {
+
+    private $_pathTemplates = "admin/user/";
+
     /**
-	 * @IsGranted("ROLE_ADMIN")
      * @Route("/", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('user/index.html.twig', [
+        return $this->render($this->_pathTemplate . 'user_index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
     }
 
     /**
-	 * @IsGranted("ROLE_ADMIN")
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
@@ -51,26 +53,14 @@ class UserController extends AbstractController
             ]);
         }
 
-        return $this->render('user/new.html.twig', [
+        return $this->render($this->_pathTemplate . 'user_new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-	 * @IsGranted("ROLE_ADMIN")
-     * @Route("/{id}", name="user_show", methods={"GET"})
-     */
-    public function show(User $user): Response
-    {
-        return $this->render('user/show.html.twig', [
-            'user' => $user,
-        ]);
-    }
-
-    /**
-	 * @IsGranted("ROLE_ADMIN")
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="user_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, User $user): Response
     {
@@ -85,15 +75,14 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('user/edit.html.twig', [
+        return $this->render($this->_pathTemplate . 'user_edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-	 * @IsGranted("ROLE_ADMIN")
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="user_delete", methods={"DELETE"})
      */
     public function delete(Request $request, User $user): Response
     {
