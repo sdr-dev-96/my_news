@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Serializer;
 use Psr\Log\LoggerInterface;
 use App\Entity\User;
 use App\Entity\Article;
+use App\Repository\ArticleRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
@@ -23,12 +24,12 @@ class ApiController extends AbstractController
     /**
      * @Route("/toto", name="api_news_get", methods={"GET"})
      */
-    public function news_get() : JsonResponse
+    public function news_get(ArticleRepository $articleRepository) : JsonResponse
     {
         $serializer = new Serializer([new ObjectNormalizer()]);
         $response = new JsonResponse();
         $response->headers->set('Content-Type', 'application/json');
-        $articles = $this->getDoctrine()->getRepository(Article::class)->findRandomArticle(1, 10);
+        $articles = $articleRepository->findRandomArticle(1, 10);
         if(!empty($articles)) {
             $jsonResult = $serializer->normalize(
                 $articles,
