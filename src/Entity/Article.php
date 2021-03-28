@@ -291,4 +291,16 @@ class Article
 
         return $this;
     }
+
+    /**
+     * Permet de récupérer les champs qu'on veut envoyer via l'API
+     * 
+     * @author  Roro-Dev    <stefanedr.dev@gmail>
+     * 
+     * @return  array
+     */
+    public static function _apiFields(): array
+    {
+        return ['id', 'titre', 'creation', 'modification', 'contenu', 'image', 'ecrivain', 'categorie'];
+    }
 }

@@ -35,7 +35,7 @@ class ApiController extends AbstractController
                 $articles,
                 'json', 
                 [
-                    AbstractNormalizer::ATTRIBUTES => ['id', 'titre', 'creation', 'modification', 'contenu', 'image', 'ecrivain', 'categorie'],
+                    AbstractNormalizer::ATTRIBUTES => Article::_apiFields(),
                     'groups' => ['ecrivain:read','article:read'],
                     'circular_reference_handler' => function ($object) {
                         return $object->getId();
