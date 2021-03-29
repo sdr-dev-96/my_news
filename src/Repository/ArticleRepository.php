@@ -25,7 +25,7 @@ class ArticleRepository extends ServiceEntityRepository
      * @param   $_online    
      * @param   $_nb        number of articles
      * 
-     * @return  Article|false
+     * @return  Article|Article[]|false
      */
     public function findRandomArticle($_online, $_nb = 1)
     {
@@ -35,13 +35,28 @@ class ArticleRepository extends ServiceEntityRepository
             ->setParameter('online', $_online)
             ->orderBy('RAND()')
             ->setMaxResults($_nb)
+            ->getQuery();
+        
+        if(!empty($result) && is_array($result) && array_key_exists(0, $result)) {
+            return ($_nb == 1) ? $result->getOneOrNullResult() : $result->getResult();
+        }
+        return false;
+    }
+
+    /**
+     * Permet de récupérer les articles par date de création
+     * 
+     * @return Article[]
+     */
+    public function findArticles()
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.online = :online')
+            ->setParameter('online', 1)
+            ->orderBy('a.creation', 'DESC')
             ->getQuery()
             ->getResult()
         ;
-        if(!empty($result) && is_array($result) && array_key_exists(0, $result)) {
-            return $result[0];
-        }
-        return false;
     }
 
     // /**

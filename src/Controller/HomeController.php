@@ -24,7 +24,7 @@ class HomeController extends AbstractController
     public function index(Request $request, PaginatorInterface $paginator, ArticleRepository $artRepo, CategorieRepository $catRepository): Response
     {
         $articles = $paginator->paginate(
-            $artRepo->findBy(["online" => true]),
+            $artRepo->findArticles(),
             $request->query->getInt('page', 1),
             6
         );

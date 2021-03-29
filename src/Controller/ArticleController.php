@@ -27,7 +27,6 @@ class ArticleController extends AbstractController
     }
     
     /**
-	 * @IsGranted("ROLE_USER")
      * @Route("/{url}", name="categorie_show", methods={"GET"})
      */
     public function showCategorie(Categorie $categorie, Request $request, PaginatorInterface $paginator): Response
@@ -44,7 +43,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/favoris/new", name="ajax_new_favori", methods={"POST"})
+     * @Route("/ajax_new_favori", name="ajax_new_favori", methods={"POST"})
      */
     public function newFavori(Request $request, ArticleRepository $articleRepository): JsonResponse
     {
@@ -60,7 +59,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/favoris/delete/{id}", name="ajax_delete_favori", methods={"DELETE"})
+     * @Route("/ajax_delete_favori/{id}", name="ajax_delete_favori", methods={"DELETE"})
      */
     public function deleteFavori(Article $article)
     {
