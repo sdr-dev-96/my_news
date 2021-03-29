@@ -27,7 +27,11 @@ class ArticleController extends AbstractController
     }
     
     /**
-     * @Route("/{url}", name="categorie_show", methods={"GET"})
+     * @Route(
+     *      "/{url}.html", 
+     *      name="categorie_show", 
+     *      methods={"GET"}, 
+     *      condition="request.query.get() not in ['login.php', 'register.php']")
      */
     public function showCategorie(Categorie $categorie, Request $request, PaginatorInterface $paginator): Response
     {
