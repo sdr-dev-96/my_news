@@ -6,7 +6,7 @@
                 <h3 class="mb-0">
                     <a class="text-dark" href="{{ path('article_show', {'id': article.id, 'url': article.url}) }}">{{ article.titre }}</a>
                 </h3>
-                <div class="mb-1 text-muted">{{ article.creation|date('d M y') }}</div>
+                <div class="mb-1 text-muted">Publié le {{ article.creation|date('d/m/y') }}</div>
                 <p class="card-text mb-auto">{{ article.contenu|slice(0, 100)}}...</p>
                 <a class="text-dark font-weight-bold" href="{{ path('article_show', {'id': article.id, 'url': article.url}) }}">
                     Lire plus&nbsp;<i class="fas fa-angle-right"></i>
