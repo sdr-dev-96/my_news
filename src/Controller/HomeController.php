@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Article;
 use App\Entity\Categorie;
+use App\Entity\Message;
 use App\Form\ProfilType;
+use App\Form\ContactType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,13 +45,34 @@ class HomeController extends AbstractController
         $form = $this->createForm(ProfilType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {            
-            $user           = $form->getData();
+            $user = $form->getData();
             if(!empty($user->getPlainPassword())) {
                 $user->setPassword($passwordEncoder->encodePassword($user, $user->getPlainPassword()));
             }
             $this->getDoctrine()->getManager()->flush();
         }
         return $this->render('home/profil.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/contact", name="contact", methods={"GET", "POST"})
+     */
+    public function contact(Request $request)
+    {
+        $message = new Message();
+        $form = $this->createForm(ContactType::class, $message);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {   
+            $message = $form->getData();
+            $message->setCreation(new \Datetime('now'));
+            $entityManager  = $this->getDoctrine()->getManager();
+            $entityManager->persist($message);
+            $entityManager->flush();
+            return $this->redirectToRoute('contact');
+        }
+        return $this->render('home/contact.html.twig', [
             'form' => $form->createView(),
         ]);
     }

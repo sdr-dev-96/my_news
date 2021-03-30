@@ -69,7 +69,7 @@
         <main class="container">
             {% block body %}{% endblock %}
         </main>
-        {% if app.request.get('_route') not in exclude_uris %}
+        {% if app.request.get('_route') not in ['admin', 'app_login', 'app_register'] %}
             <footer class="blog-footer">
                 <div class="footer-links">
                     <p>2020 - {{ "now"|date("Y") }}</p>
