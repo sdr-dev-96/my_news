@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/register.php", name="app_register", methods={"POST"})
+     * @Route("/register", name="app_register", methods={"POST", "GET"})
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder) 
     {
@@ -38,7 +38,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/login.php", name="app_login", methods={"POST"})
+     * @Route("/login", name="app_login", methods={"POST", "GET"})
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -58,7 +58,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/logout.php", name="logout", methods={"GET"})
+     * @Route("/logout", name="logout", methods={"GET"})
      */
     public function logout()
     {

@@ -3,31 +3,38 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    {% if app.user %}
-        <div class="mb-3">
-            Vous êtes connectés en tant que {{ app.user.prenom ~ app.user.nom }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
-
+<div class="col-12 col-sm-6 offset-sm-3">
     <h3 class="mb-3 font-weight-normal text-center">Connectes toi !</h3>
-    <label for="inputEmail">Adresse mail</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+    <form method="post">
+        <div id="login">
+            {% if error %}
+                <div class="alert alert-danger error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-    <br>
-    <button class="btn btn-large btn-block btn-success" type="submit">
-        Se Connecter
-    </button>
-    <br>
-    <div class="text-center m">
-        <a class="text-dark" href="/register">Pas de compte ? Inscris toi ici !</a>
-    </div>
-</form>
+            {% if app.user %}
+                <div class="mb-3">
+                    Vous êtes connectés en tant que {{ app.user.prenom ~ app.user.nom }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+
+            <div>
+                <label for="inputEmail">Adresse mail</label>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+            </div>
+            <div>
+                <label for="inputPassword">Mot de passe</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" required>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <br>
+            <button class="btn btn-large btn-block btn-success" type="submit">
+                Se Connecter
+            </button>
+            <br>
+            <div class="text-center m">
+                <a class="text-dark" href="/register">Pas de compte ? Inscris toi ici !</a>
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}

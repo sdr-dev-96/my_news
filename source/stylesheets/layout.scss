@@ -1,4 +1,5 @@
 $font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+$font-black: #000;
 
 .blog-header-logo {
 	font-family: $font-family;
@@ -45,14 +46,14 @@ $font-family: "Playfair Display", Georgia, "Times New Roman", serif;
 
 #list-categories {
 	a {
-		color: #000;
+		color: $font-black;
 	}
 
 	margin: 20px auto;
 }
 
 .nav-link {
-	color: #000;
+	color: $font-black;
 	&:hover {
 		color: #3e3e3e;
 		text-decoration: underline;
