@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -140,15 +141,6 @@ class User implements UserInterface
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
-    }
-
-    /**
-     * Permet de récupérer la liste des rôles au format string
-     * @return  string
-     */
-    public function getRolesList(): string
-    {
-        return ($this->roles) ? implode('/ ', $this->roles) : 'Aucun rôle attribué';
     }
 
     public function setRoles(array $roles): self
@@ -353,5 +345,19 @@ class User implements UserInterface
         $this->modification = $modification;
 
         return $this;
+    }
+
+    /**
+     * Permet de récupérer les libellés des différents rôles
+     * 
+     * @return  array
+     */
+    public static function _userRoles()
+    {
+        return [
+            "ROLE_ADMIN"    =>  'Admin',
+            "ROLE_USER"     =>  'Utilisateur',
+            "ROLE_AUTHOR"   =>  'Auteur'
+        ];
     }
 }

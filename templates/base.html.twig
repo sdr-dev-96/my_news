@@ -25,14 +25,14 @@
                                 Accueil
                             </a>
                             {% if is_granted('ROLE_ADMIN') %}
-                                <a class="nav-link" href="{{ path('admin') }}">
+                                <a class="nav-link" href="{{ path('article_index') }}">
                                     Dashboard
                                 </a>
                             {% endif %}
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="user-picto" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-user"></i>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu" aria-labelledby="user-picto">
                                 <a class="dropdown-item" href="{{ path('user_profil', {'_fragment': 'mes-infos'}) }}">
                                     <i class="far fa-user"></i>&nbsp;&nbsp;Mes Informations
                                 </a>

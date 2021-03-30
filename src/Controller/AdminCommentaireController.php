@@ -25,7 +25,7 @@ class AdminCommentaireController extends AbstractController
      */
     public function commentaireIndex(CommentaireRepository $commentaireRepository): Response
     {
-        return $this->render($this->_pathTemplate . 'commentaire_index.html.twig', [
+        return $this->render($this->_pathTemplates . 'commentaire_index.html.twig', [
             'commentaires' => $commentaireRepository->findAll(),
         ]);
     }
@@ -33,7 +33,7 @@ class AdminCommentaireController extends AbstractController
     /**
      * @Route("/{id}/edit", name="commentaire_edit", methods={"GET","POST"})
      */
-    public function commentairEdit(Request $request, Commentaire $commentaire): Response
+    public function commentaireEdit(Request $request, Commentaire $commentaire): Response
     {
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
@@ -44,7 +44,7 @@ class AdminCommentaireController extends AbstractController
             return $this->redirectToRoute('commentaire_index');
         }
 
-        return $this->render($this->_pathTemplate . 'commentaire_edit.html.twig', [
+        return $this->render($this->_pathTemplates . 'commentaire_edit.html.twig', [
             'commentaire' => $commentaire,
             'form' => $form->createView(),
         ]);

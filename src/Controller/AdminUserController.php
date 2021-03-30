@@ -26,8 +26,9 @@ class AdminUserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render($this->_pathTemplate . 'user_index.html.twig', [
+        return $this->render($this->_pathTemplates . 'user_index.html.twig', [
             'users' => $userRepository->findAll(),
+            'roles' => User::_userRoles()
         ]);
     }
 
@@ -53,7 +54,7 @@ class AdminUserController extends AbstractController
             ]);
         }
 
-        return $this->render($this->_pathTemplate . 'user_new.html.twig', [
+        return $this->render($this->_pathTemplates . 'user_new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
@@ -75,7 +76,7 @@ class AdminUserController extends AbstractController
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render($this->_pathTemplate . 'user_edit.html.twig', [
+        return $this->render($this->_pathTemplates . 'user_edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);

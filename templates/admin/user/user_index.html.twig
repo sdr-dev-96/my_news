@@ -15,7 +15,7 @@
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Email</th>
-                <th>Roles</th>
+                <th>Rôle</th>
                 <th></th>
             </tr>
         </thead>
@@ -26,7 +26,7 @@
                 <td>{{ user.nom }}</td>
                 <td>{{ user.prenom }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.getRolesList }}</td>
+                <td>{{ roles[user.roles[0]] }}</td>
                 <td width="10%" align="center">
                     <a class="btn btn-outline-info" href="{{ path('user_edit', {'id': user.id}) }}"
                         title="Modifier l'utilisateur">
