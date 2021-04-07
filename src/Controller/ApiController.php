@@ -13,7 +13,9 @@ use Symfony\Component\Serializer\Serializer;
 use Psr\Log\LoggerInterface;
 use App\Entity\User;
 use App\Entity\Article;
+use App\Entity\Categorie;
 use App\Repository\ArticleRepository;
+use App\Repository\CategorieRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
@@ -22,16 +24,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class ApiController extends AbstractController
 {
     /**
-     * @Route("/toto", name="api_news_get", methods={"GET"})
+     * @Route("/articles", name="api_news_get", methods={"GET"})
      */
     public function news_get(ArticleRepository $articleRepository) : JsonResponse
     {
         $serializer = new Serializer([new ObjectNormalizer()]);
         $response = new JsonResponse();
         $response->headers->set('Content-Type', 'application/json');
-        $articles = $articleRepository->findRandomArticle(1, 10);
+        $articles = $articleRepository->findBy(['online' => true], null, 2);
         if(!empty($articles)) {
-            $jsonResult = $serializer->normalize(
+            $json = $serializer->normalize(
                 $articles,
                 'json', 
                 [
@@ -42,9 +44,37 @@ class ApiController extends AbstractController
                     }
                 ]
             );
-            $response = new JsonResponse($jsonResult, 200);
+            $response = new JsonResponse($json, 200);
         } else {
             $response = new JsonResponse('Aucun article trouvé ...', 500);
+        }
+        return $response;
+    }
+
+    /**
+     * @Route("/categories", name="api_categories_get", methods={"GET"})
+     */
+    public function categorie_get(CategorieRepository $categorieRepository) : JsonResponse
+    {
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $response = new JsonResponse();
+        $response->headers->set('Content-Type', 'application/json');
+        $categories = $categorieRepository->findAll();
+        if(!empty($categories)) {
+            $json = $serializer->normalize(
+                $categories,
+                'json',
+                [
+                    AbstractNormalizer::ATTRIBUTES => Categorie::_apiFields(),
+                    'groups' => ['categorie:read'],
+                    'circular_reference_handler' => function ($object) {
+                        return $object->getId();
+                    }
+                ]
+            );
+            $response = new JsonResponse($json, 200);
+        } else {
+            $response = new JsonResponse('Aucune catégorie trouvée ...', 500);
         }
         return $response;
     }

@@ -3,10 +3,13 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
+<div class="col-12 col-sm-8 offset-sm-2">
+    <br>
     <h3 class="mb-3 font-weight-normal text-center">Inscris toi !</h3>
     {{ form_start(form) }}
         {{ form_widget(form) }}
         <br>
         <button class="btn btn-large btn-block btn-success">{{ button_label|default('Mettre à jour') }}</button>
     {{ form_end(form) }}
+</div>
 {% endblock %}
