@@ -20,7 +20,7 @@ gulp.task('min-js', function() {
 
 gulp.task('watch', function() {
     gulp.watch('public/css/*.scss', gulp.series('sass'));
-    gulp.watch('public/js/*.js', gulp.series('min-js'));
+    //gulp.watch('public/js/*.js', gulp.series('min-js'));
 });
 
 gulp.task('default', gulp.series('watch'));

@@ -2,21 +2,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-}
-.articles-pagination nav {
-  height: 100px;
-}
+  width: 100%; }
+  .articles-pagination nav {
+    height: 100px; }
 
 .page-item:hover {
-  color: #5f5f5f;
-}
+  color: #5f5f5f; }
+
 .page-item.active .page-link {
   background-color: #000;
-  border-color: #000;
-}
-.page-item .page-link {
-  color: #000;
-}
+  border-color: #000; }
 
-/*# sourceMappingURL=pagination.css.map */
+.page-item .page-link {
+  color: #000; }
