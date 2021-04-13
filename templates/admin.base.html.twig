@@ -60,6 +60,14 @@
                             </li>
                             <div class="dropdown-divider"></div>
                             <li class="nav-item">
+                                <a id="user_link" class="nav-link {% if app.request.get('_route') in user_uris %}active{% endif %}" 
+                                    href="{{ path('user_index') }}">
+                                    <i class="fas fa-comment-dots"></i>
+                                    &nbsp;Messages
+                                </a>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ path('home') }}">
                                     <i class="fas fa-arrow-left"></i>
                                     &nbsp;Retourner au site

@@ -7,19 +7,21 @@
                     <a class="text-dark" href="{{ path('article_show', {'id': article.id, 'url': article.url}) }}">{{ article.titre }}</a>
                 </h3>
                 <div class="mb-1 text-muted">Publié le {{ article.creation|date('d/m/y') }}</div>
-                <p class="card-text mb-auto">{{ article.contenu|slice(0, 100)}}...</p>
+                <p class="card-text mb-auto">{{ article.contenu|slice(0, 200)}}...</p>
                 <a class="text-dark font-weight-bold" href="{{ path('article_show', {'id': article.id, 'url': article.url}) }}">
                     Lire plus&nbsp;<i class="fas fa-angle-right"></i>
                 </a>
                 {% if app.user %}
                     {% if article in app.user.getFavoris %}
-                        <span class="remove-favori fas fa-heart" article-id="{{ article.id }}" data-target="{{ container }}"></span>
+                        <span class="remove-favori fas fa-star" article-id="{{ article.id }}" data-target="{{ container }}"></span>
                     {% else %}
-                        <span class="add-favori far fa-heart" article-id="{{ article.id }}"></span>
+                        <span class="add-favori far fa-star" article-id="{{ article.id }}"></span>
                     {% endif %}
                 {% endif %}
             </div>
-            <img class="card-img-right flex-auto d-none d-md-block" src="https://image.tmdb.org/t/p/w200/iUp85s5s7eaPbuCUNqOCeJCEVpY.jpg" alt="Card image cap">
+            {% if article.image %}
+                <img class="card-img-right flex-auto d-none d-md-block" src="{{ article.getImagePath }}" alt="{{ article.titre }}">
+            {% endif %}
         </div>
     </div>
 {% else %}

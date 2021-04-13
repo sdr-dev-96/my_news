@@ -298,4 +298,16 @@ class Article
     {
         return ['id', 'titre', 'creation', 'modification', 'contenu', 'image', 'ecrivain', 'categorie'];
     }
+
+    /**
+     * Permet de récupérer le path de l'image de l'article
+     * 
+     * @author  Roro-Dev    <stefanedr.dev@gmail>
+     * 
+     * @return  string
+     */
+    public function getImagePath(): string
+    {
+        return "/uploads/article/$this->id/$this->image";
+    }
 }

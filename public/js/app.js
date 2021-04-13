@@ -8,7 +8,7 @@ $(function() {
     $(document).on('click', '.add-favori', function(element) {
         let article_id = $(this).attr('article-id');
         $.ajax({
-            url: '/favoris/new',
+            url: '/ajax_new_favori',
             data: {'articleId': article_id},
             async: true,
             method: "POST",

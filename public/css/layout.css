@@ -5,6 +5,9 @@
 .blog-header #user-picto.nav-link:hover {
   text-decoration: none; }
 
+.blog-header #user-picto:after {
+  display: none; }
+
 .bloc-article {
   position: relative; }
   .bloc-article .card {
@@ -14,7 +17,7 @@
   position: absolute;
   bottom: 10px;
   right: 10px;
-  color: red;
+  color: #f5d907;
   background-color: white;
   padding: 10px;
   border-radius: 100%; }
@@ -26,7 +29,7 @@
   position: absolute;
   bottom: 10px;
   right: 10px;
-  color: red;
+  color: #f5d907;
   background-color: white;
   padding: 10px;
   border-radius: 100%; }

@@ -11,6 +11,10 @@ $font-black: #000;
 		&.nav-link:hover {
 			text-decoration: none;
 		}
+
+		&:after {
+			display: none;
+		}
 	}
 }
 
@@ -26,7 +30,7 @@ $font-black: #000;
 	position: absolute;
 	bottom: 10px;
 	right: 10px;
-	color: red;
+	color: #f5d907;
 	background-color: white;
 	padding: 10px;
 	border-radius: 100%;
@@ -34,14 +38,13 @@ $font-black: #000;
 		cursor: pointer;
 		background-color: #E0E0E0;
 	}
-
 }
 
 .remove-favori {
 	position: absolute;
 	bottom: 10px;
 	right: 10px;
-	color: red;
+	color: #f5d907;
 	background-color: white;
 	padding: 10px;
 	border-radius: 100%;
