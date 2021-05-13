@@ -24,6 +24,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class ApiController extends AbstractController
 {
     /**
+     * @Route(name="api_login", path="/login_check")
+     * @return JsonResponse
+     */
+    public function api_login(): JsonResponse
+    {
+        $user = $this->getUser();
+
+        return new Response([
+            'email' => $user->getEmail(),
+            'roles' => $user->getRoles(),
+        ]);
+    }
+
+    /**
      * @Route("/articles", name="api_news_get", methods={"GET"})
      */
     public function news_get(ArticleRepository $articleRepository) : JsonResponse
