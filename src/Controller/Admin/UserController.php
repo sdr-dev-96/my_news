@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
+use App\Controller\Admin\AdminController;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -13,20 +14,23 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/user")
  */
-class AdminUserController extends AbstractController
+class UserController extends AdminController
 {
 
-    private $_pathTemplates = "admin/user/";
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_pathViews .= "user/";
+    }
 
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render($this->_pathTemplates . 'user_index.html.twig', [
+        return $this->render($this->_pathViews . 'user_index.html.twig', [
             'users' => $userRepository->findAll(),
             'roles' => User::_userRoles()
         ]);
@@ -54,7 +58,7 @@ class AdminUserController extends AbstractController
             ]);
         }
 
-        return $this->render($this->_pathTemplates . 'user_new.html.twig', [
+        return $this->render($this->_pathViews . 'user_new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
@@ -76,7 +80,7 @@ class AdminUserController extends AbstractController
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render($this->_pathTemplates . 'user_edit.html.twig', [
+        return $this->render($this->_pathViews . 'user_edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
@@ -87,7 +91,7 @@ class AdminUserController extends AbstractController
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();

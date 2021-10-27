@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
+use App\Controller\Admin\AdminController;
 use App\Entity\Commentaire;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
@@ -15,17 +16,21 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @Route("/admin/commentaire")
  */ 
-class AdminCommentaireController extends AbstractController
+class CommentaireController extends AdminController
 {
 
-    private $_pathTemplates = "admin/commentaire/";
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_pathViews .= "commentaire/";
+    }
 
     /**
      * @Route("/", name="commentaire_index", methods={"GET"})
      */
     public function commentaireIndex(CommentaireRepository $commentaireRepository): Response
     {
-        return $this->render($this->_pathTemplates . 'commentaire_index.html.twig', [
+        return $this->render($this->_pathViews . 'commentaire_index.html.twig', [
             'commentaires' => $commentaireRepository->findAll(),
         ]);
     }
@@ -44,7 +49,7 @@ class AdminCommentaireController extends AbstractController
             return $this->redirectToRoute('commentaire_index');
         }
 
-        return $this->render($this->_pathTemplates . 'commentaire_edit.html.twig', [
+        return $this->render($this->_pathViews . 'commentaire_edit.html.twig', [
             'commentaire' => $commentaire,
             'form' => $form->createView(),
         ]);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Article;
 use App\Form\ArticleType;
@@ -12,22 +12,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/article")
  */ 
-class AdminArticleController extends AbstractController
+class ArticleController extends AdminController
 {
 
-    private $_pathTemplates = "admin/article/";
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_pathViews .= "article/";
+    }
 
     /**
      * @Route("/", name="article_index", methods={"GET"})
      */
     public function articleIndex(ArticleRepository $articleRepository): Response
     {
-        return $this->render($this->_pathTemplates . 'article_index.html.twig', [
-            'articles' => $articleRepository->findAll(),
-        ]);
+        return $this->render(
+            $this->_pathViews . 'article_index.html.twig', 
+            ['articles' => $articleRepository->findAll()]
+        );
     }
 
     /**
@@ -63,7 +67,7 @@ class AdminArticleController extends AbstractController
             ]);
         }
 
-        return $this->render($this->_pathTemplates . 'article_new.html.twig', [
+        return $this->render($this->_pathViews . 'article_new.html.twig', [
             'article'   => $article,
             'form'      => $form->createView(),
         ]);
@@ -94,7 +98,7 @@ class AdminArticleController extends AbstractController
             $this->addFlash('success', 'L\'article a bien été modifié !');
         }
 
-        return $this->render($this->_pathTemplates . 'article_edit.html.twig', [
+        return $this->render($this->_pathViews . 'article_edit.html.twig', [
             'article'   => $article,
             'form'      => $form->createView(),
         ]);

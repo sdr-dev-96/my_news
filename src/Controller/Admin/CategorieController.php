@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Categorie;
 use App\Form\CategorieType;
@@ -12,20 +12,23 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/categorie")
- */ 
-class AdminCategorieController extends AbstractController
+ */
+class CategorieController extends AdminController
 {
 
-    private $_pathTemplates = "admin/categorie/";
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_pathViews .= "categorie/";
+    }
 
     /**
      * @Route("/", name="categorie_index", methods={"GET"})
      */
     public function categorieIndex(CategorieRepository $categorieRepository): Response
     {
-        return $this->render($this->_pathTemplates . 'categorie_index.html.twig', [
+        return $this->render($this->_pathViews . 'categorie_index.html.twig', [
             'categories' => $categorieRepository->findAll(),
         ]);
     }
@@ -50,7 +53,7 @@ class AdminCategorieController extends AbstractController
             ]);
         }
 
-        return $this->render($this->_pathTemplates . 'categorie_new.html.twig', [
+        return $this->render($this->_pathViews . 'categorie_new.html.twig', [
             'categorie' => $categorie,
             'form' => $form->createView(),
         ]);
@@ -71,7 +74,7 @@ class AdminCategorieController extends AbstractController
             return $this->redirectToRoute('categorie_index');
         }
 
-        return $this->render($this->_pathTemplates . 'categorie_edit.html.twig', [
+        return $this->render($this->_pathViews . 'categorie_edit.html.twig', [
             'categorie' => $categorie,
             'form' => $form->createView(),
         ]);
@@ -82,7 +85,7 @@ class AdminCategorieController extends AbstractController
      */
     public function categorieDelete(Request $request, Categorie $categorie): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$categorie->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $categorie->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($categorie);
             $entityManager->flush();
@@ -96,20 +99,21 @@ class AdminCategorieController extends AbstractController
      * 
      * @author  Roro-Dev    <stefanedr.dev@gmail>
      * 
-     * @param   string      $string
-     * 
+     * @param   string      $string     * 
      * @return  string
      */
     private function generate_url(string $string): string
     {
         $url = "";
-        if(!empty($string)) {
-            $unwanted_array = array('Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
-            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
-            'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
-            'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
-            'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', ' ' => '-', '--' => '-');
-            $string = strtr( $string, $unwanted_array);
+        if (!empty($string)) {
+            $unwanted_array = array(
+                'Š' => 'S', 'š' => 's', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
+                'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U',
+                'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c',
+                'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
+                'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', ' ' => '-', '--' => '-'
+            );
+            $string = strtr($string, $unwanted_array);
             $url = urlencode($string);
             $url = strtolower($url);
         }
