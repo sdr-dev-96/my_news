@@ -29,9 +29,7 @@ class CategorieFixtures extends Fixture implements DependentFixtureInterface
         foreach($arrayCategories as $cat) {
             $categorie = new Categorie();
             $categorie->setLibelle($cat);
-            if($faker->hexcolor != '#ffffff' && $faker->hexcolor != '#000000') {
-                $categorie->setCouleur($faker->hexcolor);
-            }
+            $categorie->setUrl('test');
             $manager->persist($categorie);
             $randCategorie[] = $categorie;
         }

@@ -42,6 +42,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
                 ->setImage(null)
                 ->setCategorie($categorie)
                 ->setOnline(rand(0,1) == 1)
+                ->setUrl('test')
             ;
             $manager->persist($article);
         }
