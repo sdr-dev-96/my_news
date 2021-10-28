@@ -31,7 +31,7 @@ class ApiController extends AbstractController
     {
         $user = $this->getUser();
 
-        return new Response([
+        return new JsonResponse([
             'email' => $user->getEmail(),
             'roles' => $user->getRoles(),
         ]);
@@ -40,19 +40,19 @@ class ApiController extends AbstractController
     /**
      * @Route("/articles", name="api_news_get", methods={"GET"})
      */
-    public function news_get(ArticleRepository $articleRepository) : JsonResponse
+    public function news_get(ArticleRepository $articleRepository): JsonResponse
     {
         $serializer = new Serializer([new ObjectNormalizer()]);
         $response = new JsonResponse();
         $response->headers->set('Content-Type', 'application/json');
         $articles = $articleRepository->findBy(['online' => true], null, 2);
-        if(!empty($articles)) {
+        if (!empty($articles)) {
             $json = $serializer->normalize(
                 $articles,
-                'json', 
+                'json',
                 [
                     AbstractNormalizer::ATTRIBUTES => Article::_apiFields(),
-                    'groups' => ['ecrivain:read','article:read'],
+                    'groups' => ['ecrivain:read', 'article:read'],
                     'circular_reference_handler' => function ($object) {
                         return $object->getId();
                     }
@@ -68,13 +68,13 @@ class ApiController extends AbstractController
     /**
      * @Route("/categories", name="api_categories_get", methods={"GET"})
      */
-    public function categorie_get(CategorieRepository $categorieRepository) : JsonResponse
+    public function categorie_get(CategorieRepository $categorieRepository): JsonResponse
     {
         $serializer = new Serializer([new ObjectNormalizer()]);
         $response = new JsonResponse();
         $response->headers->set('Content-Type', 'application/json');
         $categories = $categorieRepository->findAll();
-        if(!empty($categories)) {
+        if (!empty($categories)) {
             $json = $serializer->normalize(
                 $categories,
                 'json',

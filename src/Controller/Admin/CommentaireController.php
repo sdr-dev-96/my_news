@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/admin/commentaire")
- */ 
+ */
 class CommentaireController extends AdminController
 {
 
@@ -28,7 +28,7 @@ class CommentaireController extends AdminController
     /**
      * @Route("/", name="commentaire_index", methods={"GET"})
      */
-    public function commentaireIndex(CommentaireRepository $commentaireRepository): Response
+    public function indexAction(CommentaireRepository $commentaireRepository): Response
     {
         return $this->render($this->_pathViews . 'commentaire_index.html.twig', [
             'commentaires' => $commentaireRepository->findAll(),
@@ -38,7 +38,7 @@ class CommentaireController extends AdminController
     /**
      * @Route("/{id}/edit", name="commentaire_edit", methods={"GET","POST"})
      */
-    public function commentaireEdit(Request $request, Commentaire $commentaire): Response
+    public function editAction(Request $request, Commentaire $commentaire): Response
     {
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
@@ -58,9 +58,9 @@ class CommentaireController extends AdminController
     /**
      * @Route("/{id}", name="commentaire_delete", methods={"DELETE"})
      */
-    public function commentaireDelete(Request $request, Commentaire $commentaire): Response
+    public function deleteAction(Request $request, Commentaire $commentaire): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$commentaire->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $commentaire->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($commentaire);
             $entityManager->flush();
@@ -72,10 +72,10 @@ class CommentaireController extends AdminController
     /**
      * @Route("/{id}/valid/{etat}", name="commentaire_valid", methods={"PUT"})
      */
-    public function commentaireValid(Commentaire $commentaire, int $etat)
+    public function validAction(Commentaire $commentaire, int $etat)
     {
         $response   = new JsonResponse(['message' => 'Une erreur est survenue !'], 500);
-        if($this->getUser()) {
+        if ($this->getUser()) {
             $commentaire->setValid(($etat == 1));
             $this->getDoctrine()->getManager()->flush();
             $response = new JsonResponse([

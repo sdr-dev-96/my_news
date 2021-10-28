@@ -23,7 +23,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(Request $request, PaginatorInterface $paginator, ArticleRepository $artRepo, CategorieRepository $catRepository): Response
+    public function indexAction(Request $request, PaginatorInterface $paginator, ArticleRepository $artRepo, CategorieRepository $catRepository): Response
     {
         $articles = $paginator->paginate(
             $artRepo->findArticles(),
@@ -39,14 +39,14 @@ class HomeController extends AbstractController
     /**
      * @Route("/profil", name="user_profil", methods={"GET", "POST"})
      */
-    public function profil(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function profilAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = $this->getUser();
         $form = $this->createForm(ProfilType::class, $user);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {            
+        if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
-            if(!empty($user->getPlainPassword())) {
+            if (!empty($user->getPlainPassword())) {
                 $user->setPassword($passwordEncoder->encodePassword($user, $user->getPlainPassword()));
             }
             $this->getDoctrine()->getManager()->flush();
@@ -59,12 +59,12 @@ class HomeController extends AbstractController
     /**
      * @Route("/contact", name="contact", methods={"GET", "POST"})
      */
-    public function contact(Request $request)
+    public function contactAction(Request $request)
     {
         $message = new Message();
         $form = $this->createForm(ContactType::class, $message);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {   
+        if ($form->isSubmitted() && $form->isValid()) {
             $message = $form->getData();
             $message->setCreation(new \Datetime('now'));
             $entityManager  = $this->getDoctrine()->getManager();
@@ -80,7 +80,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/sitemap.xml", name="sitemap", defaults={"_format"="xml"})
      */
-    public function sitemap(Request $request): Response
+    public function sitemapAction(Request $request): Response
     {
         $hostname = $request->getSchemeAndHttpHost();
 
@@ -108,16 +108,18 @@ class HomeController extends AbstractController
                 'changefreq' => 'frequently', 'priority' => 1
             ];
         }
-        
+
         $response = new Response(
-            $this->renderView('home/sitemap.html.twig', 
-            [
-                'urls' => $urls,
-                'hostname' => $hostname
-            ]),
+            $this->renderView(
+                'home/sitemap.html.twig',
+                [
+                    'urls' => $urls,
+                    'hostname' => $hostname
+                ]
+            ),
             200
         );
-        
+
         $response->headers->set('Content-Type', 'text/xml');
         return $response;
     }
