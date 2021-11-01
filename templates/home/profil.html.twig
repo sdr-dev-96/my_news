@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% set favoris = app.user.getFavoris %}
+{% set commentaires = app.user.getCommentaires %}
+{% set size_favoris = favoris|length %}
+{% set size_commentaires = commentaires|length %}
+
 {% block title %}Mon Profil{% endblock %}
 
 {% block fil_ariane %}
@@ -11,9 +16,11 @@
         <h1 id="profil-message" class="text-center">Bonjour, {{ app.user.prenom }}</h1>
         <nav class="nav nav-tabs">
             <a class="nav-item nav-link active" href="#mes-infos" data-toggle="tab">Mes Informations</a>
-            <a class="nav-item nav-link " href="#mes-favoris" data-toggle="tab">Mes Favoris</a>
-            <a class="nav-item nav-link " href="#mes-commentaires" data-toggle="tab">Mes Commentaires</a>
-            <a class="nav-item nav-link" href="#mes-articles" data-toggle="tab">Mes Articles</a>
+            <a class="nav-item nav-link " href="#mes-favoris" data-toggle="tab">Mes Favoris ({{ size_favoris }})</a>
+            <a class="nav-item nav-link " href="#mes-commentaires" data-toggle="tab">Mes Commentaires ({{ size_commentaires }})</a>
+            {% if is_granted('ROLE_AUTHOR') %}
+                <a class="nav-item nav-link" href="#mes-articles" data-toggle="tab">Mes Articles</a>
+            {% endif %}
         </nav>
 
         <div class="tab-content">
@@ -23,7 +30,8 @@
                 <div class="content">
                     {{ form_start(form) }}
                         {{ form_widget(form) }}
-                        <button class="btn">{{ button_label|default('Mettre à jour') }}</button>
+                        <br/>
+                        <button class="btn btn-success btn-block">{{ button_label|default('Mettre à jour') }}</button>
                     {{ form_end(form) }}
                 </div>
             </div>
@@ -31,23 +39,25 @@
             <div class="tab-pane fade show" id="mes-favoris">
                 <h2>Mes Favoris</h2>
                 <div class="row mb-2" id="user-favoris">
-                    {{ include('article/_articles.html.twig', {'articles' : app.user.getFavoris, 'container': '#user-favoris'}) }}
+                    {{ include('article/_articles.html.twig', {'articles' : favoris, 'container': '#user-favoris'}) }}
                 </div>
             </div>
             <!-- MES COMMENTAIRES -->
             <div class="tab-pane fade show" id="mes-commentaires">
                 <h2>Mes Commentaires</h2>
                 <div class="content">
-                    {{ include('article/_commentaires.html.twig', {'commentaires' : app.user.getCommentaires}) }}
+                    {{ include('article/_commentaires.html.twig', {'commentaires' : commentaires}) }}
                 </div>
             </div>
             
-            <!-- MES ARTICLES -->
-            <div class="tab-pane fade show" id="mes-articles">
-                <h2>Mes Articles</h2>
-                <div class="content">
+            {% if is_granted('ROLE_AUTHOR') %}
+                <!-- MES ARTICLES -->
+                <div class="tab-pane fade show" id="mes-articles">
+                    <h2>Mes Articles</h2>
+                    <div class="content">
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
 
     </div>

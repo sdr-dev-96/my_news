@@ -19,5 +19,6 @@ abstract class AdminController extends AbstractController
     public function __construct()
     {
         $this->_pathViews = 'admin/';
+        dd('stop');
     }
 }

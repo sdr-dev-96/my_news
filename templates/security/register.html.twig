@@ -9,7 +9,11 @@
     {{ form_start(form) }}
         {{ form_widget(form) }}
         <br>
-        <button class="btn btn-large btn-block btn-success">{{ button_label|default('Mettre à jour') }}</button>
+        <button class="btn btn-large btn-block btn-success">{{ button_label|default('Enregistrer') }}</button>
     {{ form_end(form) }}
+    <br>
+    <div class="text-center m">
+        <a class="text-dark" href="/login">Déjà un compte ? Connectes toi !</a>
+    </div>
 </div>
 {% endblock %}

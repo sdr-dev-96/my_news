@@ -1,17 +1,25 @@
+#login-container {
+  margin: 5% auto;
+}
+
 .blog-header-logo {
   font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-  font-size: 2.25rem; }
+  font-size: 2.25rem;
+}
 
 .blog-header #user-picto.nav-link:hover {
-  text-decoration: none; }
-
+  text-decoration: none;
+}
 .blog-header #user-picto:after {
-  display: none; }
+  display: none;
+}
 
 .bloc-article {
-  position: relative; }
-  .bloc-article .card {
-    height: 330px; }
+  position: relative;
+}
+.bloc-article .card {
+  height: 330px;
+}
 
 .add-favori {
   position: absolute;
@@ -20,10 +28,12 @@
   color: #f5d907;
   background-color: white;
   padding: 10px;
-  border-radius: 100%; }
-  .add-favori:hover {
-    cursor: pointer;
-    background-color: #E0E0E0; }
+  border-radius: 100%;
+}
+.add-favori:hover {
+  cursor: pointer;
+  background-color: #E0E0E0;
+}
 
 .remove-favori {
   position: absolute;
@@ -32,27 +42,41 @@
   color: #f5d907;
   background-color: white;
   padding: 10px;
-  border-radius: 100%; }
-  .remove-favori:hover {
-    cursor: pointer;
-    background-color: #E0E0E0; }
+  border-radius: 100%;
+}
+.remove-favori:hover {
+  cursor: pointer;
+  background-color: #E0E0E0;
+}
 
 #list-categories {
-  margin: 20px auto; }
-  #list-categories a {
-    color: #000; }
+  margin: 20px auto;
+}
+#list-categories a {
+  color: #000;
+}
 
 .nav-link {
-  color: #000; }
-  .nav-link:hover {
-    color: #3e3e3e;
-    text-decoration: underline; }
+  color: #000;
+}
+.nav-link:hover {
+  color: #3e3e3e;
+  text-decoration: underline;
+}
 
 #profil-message {
-  margin: 1em auto; }
+  margin: 1em auto;
+}
 
 .tab-pane h2 {
-  margin: 1em auto; }
+  margin: 1em auto;
+}
+.tab-pane.fade.show {
+  margin: 5% auto;
+}
 
 .blog-footer .footer-links a {
-  color: #999 !important; }
+  color: #999 !important;
+}
+
+/*# sourceMappingURL=layout.css.map */

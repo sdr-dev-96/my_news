@@ -135,6 +135,9 @@ h6 {
 	border-top: .05rem solid #e5e5e5;
 	bottom: 0;
 	width: 100%;
+	position: fixed;
+	left: 0;
+	bottom: 0;
 
 	p {
 		&:last-child {

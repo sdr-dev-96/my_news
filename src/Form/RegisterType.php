@@ -46,7 +46,7 @@ class RegisterType extends AbstractType
                     )
                 ),
                 'second_options' => array(
-                    'label' => 'Répéter mot de passe *',
+                    'label' => 'Répéter le mot de passe *',
                     'attr' => array(
                         'class' => 'form-control'
                     )
