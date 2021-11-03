@@ -20,6 +20,11 @@
     <!-- COMMENTAIRES -->
     <div class="my-3 p-3 bg-white">
         <h4 class="border-bottom border-gray pb-2 mb-0">Commentaires</h4>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="reset" class="btn btn-secondary">Annuler</button>
+            <button type="submit" class="btn btn-success">{{ button_label|default('Envoyer') }}</button>
+        {{ form_end(form) }}
         {{ include('article/_commentaires.html.twig', {'commentaires' : article.getCommentaires}) }}
     </div>
 {% endblock %}

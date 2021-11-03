@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Categorie;
+use App\Entity\Commentaire;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,8 +22,10 @@ class ArticleController extends AbstractController
      */
     public function showArticleAction(Article $article): Response
     {
+        $commentaireForm = $this->createForm(Commentaire::class, $article);
         return $this->render('article/article_show.html.twig', [
             'article' => $article,
+            'commentaireForm' => $commentaireForm
         ]);
     }
 
@@ -72,6 +75,31 @@ class ArticleController extends AbstractController
                 'container' =>  ''
             ]);
         }
+        return $response;
+    }
+
+    /**
+     * @Route("/ajax_add_comment", name="ajax_add_commentaire", methods={"POST"})
+     */
+    public function addCommentaireAction(Request $request, ArticleRepository $articleRepository): JsonResponse
+    {
+        $response   = new JsonResponse('Une erreur est survenue !', 500);
+        $user = $this->getUser();
+        $note = $request->request->get('note');
+        $texte = $request->request->get('texte');
+        $article = ($request->request->get('articleId')) ? $articleRepository->findOneBy(['id' => $request->request->get('articleId')]) : new Article();
+        if ($user && $article) {
+            $commentaire = new Commentaire();
+            $commentaire->setCreation(new \DateTime('now'));
+            $commentaire->setNote((int) $note);
+            $commentaire->setTexte((string) $texte);
+            $commentaire->setUser($user);
+            $commentaire->setArticle($article);
+            $this->getDoctrine()->getManager()->persist($commentaire);
+            $this->getDoctrine()->getManager()->flush();
+            $response = new JsonResponse('Votre commentaire a bien été envoyé ! Il sera traité rapidemen.', 200);
+        }
+        $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
 }
