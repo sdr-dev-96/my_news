@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Categorie;
 use App\Entity\Commentaire;
+use App\Form\CommentaireType;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,10 +23,10 @@ class ArticleController extends AbstractController
      */
     public function showArticleAction(Article $article): Response
     {
-        $commentaireForm = $this->createForm(Commentaire::class, $article);
+        $commentaireForm = $this->createForm(CommentaireType::class, null);
         return $this->render('article/article_show.html.twig', [
             'article' => $article,
-            'commentaireForm' => $commentaireForm
+            'commentaireForm' => $commentaireForm->createView()
         ]);
     }
 

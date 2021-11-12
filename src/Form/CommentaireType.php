@@ -16,23 +16,25 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class CommentaireType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('note', TextType::class, [
-                'label'     =>  'Note (de 0 à 5)',
+            ->add('texte', TextareaType::class, [
+                'label'     =>  'Ecris un commentaire',
                 'attr'      =>  array(
                     'class' =>  'form-control'
                 )
             ])
-            ->add('texte', TextType::class, [
-                'label'     =>  'Commentaire *',
+            ->add('note', HiddenType::class, [
+                'label'     =>  'Note (de 0 à 5)',
                 'attr'      =>  array(
                     'class' =>  'form-control'
-                )
+                ),
+                'data' => '0'
             ]);
     }
 
