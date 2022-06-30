@@ -2,7 +2,7 @@
 {% set article_uris     = ['article_index', 'article_new', 'article_edit'] %}
 {% set category_uris    = ['categorie_index', 'categorie_new', 'categorie_edit'] %}
 {% set commentaire_uris = ['commentaire_index', 'commentaire_new', 'commentaire_edit'] %}
-{% set user_uris        = ['user_index', 'user_new', 'user_edit'] %}
+{% set user_uris        = ['admin_user_index', 'user_new', 'user_edit'] %}
 <html>
     <head>
         <meta charset="UTF-8">
@@ -18,7 +18,7 @@
             <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">MyNews / Admin</a>
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
-                    <a class="nav-link" href="{{ path('logout') }}">Déconnexion</a>
+                    <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
                 </li>
             </ul>
         </nav>
@@ -53,7 +53,7 @@
                             <div class="dropdown-divider"></div>
                             <li class="nav-item">
                                 <a id="user_link" class="nav-link {% if app.request.get('_route') in user_uris %}active{% endif %}" 
-                                    href="{{ path('user_index') }}">
+                                    href="{{ path('admin_user_index') }}">
                                     <i class="fas fa-users"></i>
                                     &nbsp;Utilisateurs
                                 </a>
@@ -61,7 +61,7 @@
                             <div class="dropdown-divider"></div>
                             <li class="nav-item">
                                 <a id="user_link" class="nav-link {% if app.request.get('_route') in user_uris %}active{% endif %}" 
-                                    href="{{ path('user_index') }}">
+                                    href="{{ path('admin_user_index') }}">
                                     <i class="fas fa-comment-dots"></i>
                                     &nbsp;Messages
                                 </a>

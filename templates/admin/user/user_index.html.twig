@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Liste des Utilisateurs</h1>
-    <a class="btn btn-success" href="{{ path('user_new') }}">
+    <a class="btn btn-success" href="{{ path('admin_user_new') }}">
         Ajouter un utilisateur&nbsp;&nbsp;<i class="fas fa-plus"></i>
     </a>
     <br>
@@ -13,7 +13,7 @@
             <tr>
                 <th>#</th>
                 <th>Nom</th>
-                <th>Prenom</th>
+                <th>Pr&eacute;nom</th>
                 <th>Email</th>
                 <th>Rôle</th>
                 <th></th>
@@ -28,9 +28,13 @@
                 <td>{{ user.email }}</td>
                 <td>{{ roles[user.roles[0]] }}</td>
                 <td width="10%" align="center">
-                    <a class="btn btn-outline-info" href="{{ path('user_edit', {'id': user.id}) }}"
+                    <a class="btn btn-outline-info" href="{{ path('admin_user_edit', {'id': user.id}) }}"
                         title="Modifier l'utilisateur">
                         <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="btn btn-outline-warning" href="{{ path('admin_user_genpwd', {'email': user.email}) }}"
+                        title="Envoyer nouveau mot de passe">
+                        <i class="fas fa-envelope"></i>
                     </a>
                 </td>
             </tr>
@@ -41,4 +45,8 @@
         {% endfor %}
         </tbody>
     </table>
+    
+    <div class="pagination">
+        {{ knp_pagination_render(users) }}
+    </div>
 {% endblock %}

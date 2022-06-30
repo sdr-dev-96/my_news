@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Knp\Component\Pager\PaginatorInterface;
+use App\Helpers\Helper;
 
 /**
  * @Route("/admin/user")
@@ -26,18 +28,23 @@ class UserController extends AdminController
     }
 
     /**
-     * @Route("/", name="user_index", methods={"GET"})
+     * @Route("/", name="admin_user_index", methods={"GET"})
      */
-    public function indexAction(UserRepository $userRepository): Response
+    public function indexAction(UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $users = $paginator->paginate(
+            $userRepository->findAll(),
+            $request->query->getInt('page', 1),
+            10
+        );
         return $this->render($this->_pathViews . 'user_index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $users,
             'roles' => User::_userRoles()
         ]);
     }
 
     /**
-     * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @Route("/new", name="admin_user_new", methods={"GET","POST"})
      */
     public function newAction(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
@@ -65,7 +72,7 @@ class UserController extends AdminController
     }
 
     /**
-     * @Route("/edit/{id}", name="user_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="admin_user_edit", methods={"GET","POST"})
      */
     public function editAction(Request $request, User $user): Response
     {
@@ -87,7 +94,7 @@ class UserController extends AdminController
     }
 
     /**
-     * @Route("/delete/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="admin_user_delete", methods={"DELETE"})
      */
     public function deleteAction(Request $request, User $user): Response
     {
@@ -97,6 +104,18 @@ class UserController extends AdminController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('user_index');
+        return $this->redirectToRoute('admin_user_index');
+    }
+
+    /**
+     * @Route("/generate-password/{email}", name="admin_user_genpwd", methods={"GET"})
+     */
+    public function sendPasswordAction(User $user, UserPasswordEncoderInterface $encoder)
+    {
+        $plainPassword = Helper::randomPassword();
+        $encoded = $encoder->encodePassword($user, $plainPassword);
+
+        $user->setPassword($encoded);
+        return $this->redirectToRoute('admin_user_index');
     }
 }

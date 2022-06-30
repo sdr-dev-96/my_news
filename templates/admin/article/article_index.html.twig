@@ -13,10 +13,10 @@
             <tr>
                 <th>#</th>
                 <th>Titre</th>
-                <th>Crée le</th>
-                <th>Mis à jour le</th>
+                <th>D. Création</th>
+                <th>D. Modification</th>
                 <th>Image</th>
-                <th>En ligne</th>
+                <th>Publié</th>
                 <th></th>
             </tr>
         </thead>
@@ -53,4 +53,8 @@
         {% endfor %}
         </tbody>
     </table>
+    
+    <div class="pagination">
+        {{ knp_pagination_render(articles) }}
+    </div>
 {% endblock %}

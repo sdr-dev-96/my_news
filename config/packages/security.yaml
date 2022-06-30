@@ -8,14 +8,8 @@ security:
         App\Entity\User:
             algorithm: auto
     enable_authenticator_manager: true
+    access_denied_url: /redirect
     firewalls:
-        main:
-            entry_point: App\Security\AuthenticationEntryPoint
-            lazy: true
-            provider: users
-            custom_authenticator: App\Security\LoginFormAuthenticator
-            logout:
-                path: app_logout
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false

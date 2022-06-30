@@ -32,7 +32,7 @@ $(function() {
         let article_id  = $(this).attr('article-id');
         let data_target = $(this).attr('data-target');
         $.ajax({
-            url: '/favoris/' + article_id + '/delete',
+            url: '/ajax_delete_favori/' + article_id,
             method: 'DELETE',
             async: true,
             success: function(response) {
@@ -43,5 +43,23 @@ $(function() {
             },
         })
     });
-    
+
+    $(document).on('submit', '#form-commentaire', function() {
+        let articleId = $(this).get('articleId');
+        let texte = $(this).get('texte');
+        let note = $(this).get('note');
+        $.ajax({
+            url: '/ajax_add_comment',
+            method: 'POST',
+            async: true,
+            data: {'articleId': articleId, 'texte': texte, 'note': note},
+            success: function(response) {
+                $('#commentaire-form-response').html(response);
+                $('#commentaire-form-response').show();
+                setTimeout(function() {
+                    $('#commentaire-form-response').hide();
+                }, 3000);
+            }
+        })
+    });    
 })

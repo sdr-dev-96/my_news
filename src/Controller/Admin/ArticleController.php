@@ -3,13 +3,16 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
+use App\Entity\User;
 use App\Form\ArticleType;
+use App\Helpers\Helper;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/admin/article")
@@ -26,11 +29,16 @@ class ArticleController extends AdminController
     /**
      * @Route("/", name="article_index", methods={"GET"})
      */
-    public function indexAction(ArticleRepository $articleRepository): Response
+    public function indexAction(ArticleRepository $articleRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $articles = $paginator->paginate(
+            $articleRepository->findAll(),
+            $request->query->getInt('page', 1),
+            10
+        );
         return $this->render(
             $this->_pathViews . 'article_index.html.twig',
-            ['articles' => $articleRepository->findAll()]
+            ['articles' => $articles]
         );
     }
 
@@ -49,7 +57,7 @@ class ArticleController extends AdminController
                 ->setEcrivain($this->getUser())
                 ->setModification(new \Datetime('now'))
                 ->setCreation(new \Datetime('now'));
-            $article->setUrl($this->generate_url($article->getTitre()));
+            $article->setUrl(Helper::generateUrl($article->getTitre()));
             if (!empty($form->get('image')->getData())) {
                 $file       = $form->get('image')->getData();
                 $fileName   = $file->getClientOriginalName();
@@ -84,7 +92,7 @@ class ArticleController extends AdminController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $article->setModification(new \Datetime('now'));
-            $article->setUrl($this->generate_url($article->getTitre()));
+            $article->setUrl(Helper::generateUrl($article->getTitre()));
             if (!empty($form->get('image')->getData())) {
                 $file       = $form->get('image')->getData();
                 $fileName   = $file->getClientOriginalName();
@@ -119,33 +127,6 @@ class ArticleController extends AdminController
     }
 
     /**
-     * Permet de générer une url à partir d'une chaîne de caractères
-     * 
-     * @author  Roro-Dev    <stefanedr.dev@gmail>
-     * 
-     * @param   string      $string
-     * 
-     * @return  string
-     */
-    private function generate_url(string $string): string
-    {
-        $url = "";
-        if (!empty($string)) {
-            $unwanted_array = array(
-                'Š' => 'S', 'š' => 's', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
-                'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U',
-                'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c',
-                'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
-                'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', ' ' => '-', '--' => '-'
-            );
-            $string = strtr($string, $unwanted_array);
-            $url = urlencode($string);
-            $url = strtolower($url);
-        }
-        return $url;
-    }
-
-    /**
      * @Route("/generateurl", name="article_generate_url", methods={"GET"})
      */
     public function generateArticleUrlAction(ArticleRepository $articleRepository)
@@ -154,7 +135,7 @@ class ArticleController extends AdminController
         $entityManager = $this->getDoctrine()->getManager();
         $nbArticles = 0;
         foreach ($arrayArticles as $article) {
-            $article->setUrl($this->generate_url($article->getTitre()));
+            $article->setUrl(Helper::generateUrl($article->getTitre()));
             $entityManager->persist($article);
             $entityManager->flush();
             $nbArticles++;
