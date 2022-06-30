@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Categorie;
 use App\Repository\ArticleRepository;
+use App\Repository\CategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,16 +30,17 @@ class ArticleController extends AbstractController
     /**
      * @Route("/c/{url}", name="categorie_show", methods={"GET"})
      */
-    public function showCategorieAction(Categorie $categorie, Request $request, PaginatorInterface $paginator): Response
+    public function showCategorieAction(Categorie $categorie, Request $request, PaginatorInterface $paginator, CategorieRepository $catRepository): Response
     {
         $articles = $paginator->paginate(
             $categorie->getArticles(),
             $request->query->getInt('page', 1),
             6
         );
-        return $this->render('article/categorie_show.html.twig', [
+        return $this->render('categorie/categorie_show.html.twig', [
             'categorie' => $categorie,
-            'articles'  =>  $articles
+            'categories' => $catRepository->findAll(),
+            'articles' => $articles,
         ]);
     }
 

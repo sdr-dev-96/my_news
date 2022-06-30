@@ -7,6 +7,8 @@
 {% endblock %}
 
 {% block body %}
+    <!-- CATEGORIES -->
+    {{ include('categorie/_categories.html.twig', {'categories' : categories, 'current' : categorie}) }}
     <h1 class="text-center">{{ categorie.libelle }}</h1>
     <!-- ARTICLES -->
     <div class="row mb-2" id="categorie-articles">

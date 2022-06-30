@@ -1,0 +1,10 @@
+<div id="list-categories" class="nav-scroller py-1 mb-2">
+        <nav class="nav d-flex justify-content-between">
+            {% for cat in categories|sort((a, b) => a.libelle <=> b.libelle) %}
+                <a class="p-2 font-weight-bold {{ (current.id == cat.id) ? 'current' : '' }}" 
+                    href="{{ path('categorie_show', {'url': cat.url}) }}">
+                    {{ cat.libelle }}
+                </a>
+            {% endfor %}
+        </nav>
+    </div>
